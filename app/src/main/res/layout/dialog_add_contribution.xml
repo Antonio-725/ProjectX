@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/facebook_blue">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="28dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Contribution"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                android:textColor="@color/facebook_blue"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:hint="Username"
+                app:startIconTint="@color/black"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:textColor="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+
+                app:startIconTint="@color/black"
+                android:hint="Amount"
+                app:prefixText="$"
+                app:prefixTextColor="@color/black"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etContributionAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:maxLines="1"
+                    android:textColor="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+
+                app:startIconTint="@color/black"
+                android:hint="Select Date"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black"
+                app:endIconMode="custom"
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:textColor="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveContribution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.Button.ElevatedButton"
+                android:text="Save Contribution"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"
+                app:cornerRadius="16dp"
+                android:padding="16dp"
+                android:elevation="4dp"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
