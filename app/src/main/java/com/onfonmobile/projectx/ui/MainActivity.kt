@@ -21,8 +21,9 @@ import com.google.android.material.navigation.NavigationView
 import com.onfonmobile.projectx.R
 import com.onfonmobile.projectx.ui.activities.LoginActivity
 import com.onfonmobile.projectx.ui.di.SessionManager
-import com.onfonmobile.projectx.ui.login.Admin
+//import com.onfonmobile.projectx.ui.login.Admin
 import com.onfonmobile.projectx.ui.login.ProfileActivity
+import com.onfonmobile.projectx.ui.user.Admin
 
 class MainActivity : AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout

@@ -10,13 +10,13 @@ import com.onfonmobile.projectx.databinding.ItemGroupMemberBinding
 
 class GroupMembersAdapter(
     private var userList: MutableList<User>,
-    private val onUserClicked: ((User) -> Unit)? = null
+    private val onUserClicked: ((User) -> Unit)? = null,
+    private val onTotalContributionFetched: ((Long, (Double) -> Unit) -> Unit) // Pass total contribution callback
 ) : RecyclerView.Adapter<GroupMembersAdapter.UserViewHolder>() {
 
-    inner class UserViewHolder(
-        private val binding: ItemGroupMemberBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    private val userContributions = mutableMapOf<Long, Double>() // Cache contributions
 
+    inner class UserViewHolder(private val binding: ItemGroupMemberBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
             binding.apply {
                 // Set user name
@@ -44,7 +44,17 @@ class GroupMembersAdapter(
                     }
                 }
 
-                // Remove totalContributionTextView reference (since User doesn't have it)
+                // Fetch and display total contribution
+                if (userContributions.containsKey(user.id)) {
+                    totalContribution.text = "Total: $${String.format("%.2f", userContributions[user.id])}"
+                } else {
+                    // Show loading state while fetching
+                    totalContribution.text = "Loading..."
+                    onTotalContributionFetched(user.id) { total ->
+                        userContributions[user.id] = total
+                        totalContribution.text = "Total: $${String.format("%.2f", total)}"
+                    }
+                }
 
                 // Set click listener for the entire item
                 root.setOnClickListener {
@@ -55,11 +65,7 @@ class GroupMembersAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val binding = ItemGroupMemberBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
+        val binding = ItemGroupMemberBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return UserViewHolder(binding)
     }
 
@@ -70,9 +76,10 @@ class GroupMembersAdapter(
     override fun getItemCount() = userList.size
 
     // Update method for changing the user list
-    fun updateList(newList: List<User>) {
+    fun setUsers(newList: List<User>) {
         userList.clear()
         userList.addAll(newList)
         notifyDataSetChanged()
     }
+
 }
