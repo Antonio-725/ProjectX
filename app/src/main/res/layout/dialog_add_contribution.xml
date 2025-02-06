@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="12dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:background="@color/white">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:hint="Username"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black"
+                android:textColorHint="@color/gray_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/black"
+                    android:background="@color/white"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                app:prefixText="$"
+                app:prefixTextColor="@color/black"
+                android:hint="Contribution Amount"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/black"
+               >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etContributionAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/black"
+                    android:background="@color/white"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSelectDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                app:iconGravity="start"
+                android:text="Select Date"
+                android:textColor="@color/black"
+                app:strokeColor="@color/black"
+
+                app:iconTint="@color/black"/>
+
+            <TextView
+                android:id="@+id/tvSelectedDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                android:text="No date selected"
+                android:textColor="@color/black"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveContribution"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.Material3.Button"
+                android:text="Save Contribution"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/black"
+                android:padding="12dp"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

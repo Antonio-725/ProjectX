@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ToolbarTitle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+    <!-- Dashboard Card Style -->
+    <style name="DashboardCard" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="rippleColor">@color/ripple_color</item>
+        <item name="android:stateListAnimator">@animator/card_lift</item>
+    </style>
+
+    <!-- Dashboard Card Content Style -->
+    <style name="DashboardCardContent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <!-- Dashboard Icon Style -->
+    <style name="DashboardIcon">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:padding">4dp</item>
+    </style>
+
+    <!-- Dashboard Title Style -->
+    <style name="DashboardTitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:textColor">@color/primary_color</item>
+    </style>
+
+    <style name="NavDrawerTextStyle" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">14sp</item>
+
+    </style>
+    <style name="CircleImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Add to res/values/colors.xml -->
+
+        <color name="role_chip_background">#E0F7FA</color>
+        <color name="role_chip_text">#00838F</color>
+
+        <!-- Define different role chip colors -->
+        <color name="admin_chip_background">#E8F5E9</color>
+        <color name="admin_chip_text">#2E7D32</color>
+        <color name="user_chip_background">#E3F2FD</color>
+        <color name="user_chip_text">#1565C0</color>
+
+</resources>
