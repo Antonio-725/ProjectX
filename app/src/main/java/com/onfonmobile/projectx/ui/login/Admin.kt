@@ -2,6 +2,7 @@ package com.onfonmobile.projectx.ui.user
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -15,6 +16,7 @@ import com.onfonmobile.projectx.data.AppDatabase
 import com.onfonmobile.projectx.data.entities.User
 import com.onfonmobile.projectx.databinding.ActivityAdmin2Binding
 import com.onfonmobile.projectx.ui.Adapters.GroupMembersAdapter
+import com.onfonmobile.projectx.ui.di.SessionManager
 //import com.onfonmobile.projectx.ui.dialogs.ContributionDialog
 //import com.onfonmobile.projectx.ui.adapters.GroupMembersAdapter
 import com.onfonmobile.projectx.ui.login.ContributionDialog
@@ -33,6 +35,7 @@ class Admin : AppCompatActivity() {
         setupRecyclerView()
         setupDashboardActions()
         loadUsers()
+        checkUserRole()
     }
 
     private fun setupViewModel() {
@@ -110,6 +113,48 @@ class Admin : AppCompatActivity() {
             )
         }.show()
     }
+
+
+
+    private fun checkUserRole() {
+        val sessionManager = SessionManager(this)
+        if (!sessionManager.isAdmin()) {
+            restrictUserActions()
+        }
+    }
+
+    private fun restrictUserActions() {
+        binding.apply {
+            updateSavingsButton.isEnabled = false
+            viewEditUsersButton.isEnabled = false
+            calculateStatsButton.isEnabled = false
+            sendRemindersButton.isEnabled = false
+
+//            // Optional: Hide buttons instead of disabling them
+//            updateSavingsButton.visibility = View.GONE
+//            viewEditUsersButton.visibility = View.GONE
+//            calculateStatsButton.visibility = View.GONE
+//            sendRemindersButton.visibility = View.GONE
+        }
+
+       // showErrorMessage("You have read-only access.")
+        showReadOnlyDialog()
+    }
+    private fun showReadOnlyDialog() {
+        val dialog = com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+            .setTitle("Access Restricted")
+            .setMessage("You are not the admin. You have read-only permission on this page.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .show()
+
+        // Customize button color
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(resources.getColor(R.color.facebook_blue, theme)) // Change to a color that fits your theme
+    }
+
 
     private fun showUserManagementDialog() {
         // TODO: Implement user management dialog

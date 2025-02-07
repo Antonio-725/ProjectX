@@ -75,43 +75,32 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, RegistrationActivity::class.java))
         }
     }
+private fun authenticateUser(username: String, password: String) {
+    val userDao = AppDatabase.getDatabase(applicationContext).userDao()
 
-    private fun authenticateUser(username: String, password: String) {
-        val userDao = AppDatabase.getDatabase(applicationContext).userDao()
+    lifecycleScope.launch {
+        try {
+            Log.d("LoginActivity", "Authenticating user: $username")
+            val user = userDao.getUserByUsername(username)
 
-        lifecycleScope.launch {
-            try {
-                Log.d("LoginActivity", "Authenticating user: $username")
-                val user = userDao.getUserByUsername(username)
+            if (user != null && BCrypt.checkpw(password, user.password)) {
+                Log.d("LoginActivity", "Login successful")
 
-                if (user != null && BCrypt.checkpw(password, user.password)) {
-                    Log.d("LoginActivity", "Login successful")
+                // Get the user's role from the database
+                val userRole = user.role // Assuming 'role' is a column in the User table
 
-                    // Create session
-                    sessionManager.createSession(username, user.id)
-                    // Delay transition to MainActivity for at least 2 seconds
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                        finish()
-                    }, 5000) // 2-second delay for GIF animation
+                // Create session with role
+                sessionManager.createSession(username, user.id, userRole)
 
+                // Delay transition to MainActivity for at least 2 seconds
+                Handler(Looper.getMainLooper()).postDelayed({
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    finish()
+                }, 2000) // 2-second delay for GIF animation
 
-                    // Redirect to MainActivity
-//                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-//                    finish()
-                } else {
-                    Log.d("LoginActivity", "Invalid credentials")
-                    Toast.makeText(this@LoginActivity, "Invalid username or password", Toast.LENGTH_SHORT).show()
-
-                    // Show inputs and button again, hide loading GIF
-                    binding.usernameInput.visibility = View.VISIBLE
-                    binding.passwordInput.visibility = View.VISIBLE
-                    binding.loginButton.visibility = View.VISIBLE
-                    binding.loadingGif.visibility = View.GONE
-                }
-            } catch (e: Exception) {
-                Log.e("LoginActivity", "Authentication failed: ${e.message}")
-                Toast.makeText(this@LoginActivity, "Authentication error", Toast.LENGTH_SHORT).show()
+            } else {
+                Log.d("LoginActivity", "Invalid credentials")
+                Toast.makeText(this@LoginActivity, "Invalid username or password", Toast.LENGTH_SHORT).show()
 
                 // Show inputs and button again, hide loading GIF
                 binding.usernameInput.visibility = View.VISIBLE
@@ -119,6 +108,17 @@ class LoginActivity : AppCompatActivity() {
                 binding.loginButton.visibility = View.VISIBLE
                 binding.loadingGif.visibility = View.GONE
             }
+        } catch (e: Exception) {
+            Log.e("LoginActivity", "Authentication failed: ${e.message}")
+            Toast.makeText(this@LoginActivity, "Authentication error", Toast.LENGTH_SHORT).show()
+
+            // Show inputs and button again, hide loading GIF
+            binding.usernameInput.visibility = View.VISIBLE
+            binding.passwordInput.visibility = View.VISIBLE
+            binding.loginButton.visibility = View.VISIBLE
+            binding.loadingGif.visibility = View.GONE
         }
     }
+}
+
 }

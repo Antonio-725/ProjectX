@@ -174,12 +174,19 @@ class ContributionDialog(
     }
 
     private fun showError(message: String) {
-        MaterialAlertDialogBuilder(context)
+        val dialog = MaterialAlertDialogBuilder(context)
             .setTitle("Error")
             .setMessage(message)
-            .setPositiveButton("OK", null)
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
             .show()
+
+        // Ensure the "OK" button is clearly visible by setting a better text color
+        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
+            ?.setTextColor(context.getColor(R.color.facebook_blue)) // Change to a color that fits your theme
     }
+
 
     private fun showSuccess(message: String) {
         Snackbar.make(
