@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.onfonmobile.projectx.data.entities.Contribution
+import com.onfonmobile.projectx.data.entities.UserTotalContribution
 
 @Dao
 interface ContributionDao {
@@ -25,6 +26,11 @@ interface ContributionDao {
 
     @Query("SELECT SUM(amount) FROM contributions WHERE userId = :userId")
     suspend fun getTotalContributionByUser(userId: Long): Double?
+
+    // New method to get total contributions for all users
+    @Query("SELECT userId, SUM(amount) as total FROM contributions GROUP BY userId")
+    suspend fun getTotalContributionsPerUser(): List<UserTotalContribution>
+
 
     @Query("SELECT * FROM contributions")
     suspend fun getAllContributions(): List<Contribution>

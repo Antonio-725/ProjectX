@@ -20,32 +20,32 @@
             android:background="#80000000"
             android:visibility="gone">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <!-- Circular Progress Bar -->
-            <ProgressBar
-                android:layout_width="64dp"
-                android:id="@+id/progress"
-                android:layout_height="64dp"
-                android:background="@drawable/progress"
+                <!-- Circular Progress Bar -->
+                <ProgressBar
+                    android:layout_width="64dp"
+                    android:id="@+id/progress"
+                    android:layout_height="64dp"
+                    android:background="@drawable/progress"
 
-                android:indeterminate="true"
-                style="@android:style/Widget.Material.ProgressBar.Large" />
+                    android:indeterminate="true"
+                    style="@android:style/Widget.Material.ProgressBar.Large" />
 
-            <!-- Message Text -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Initiating USSD code..."
-                android:textSize="18sp"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-    </FrameLayout>
+                <!-- Message Text -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Initiating USSD code..."
+                    android:textSize="18sp"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </FrameLayout>
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
@@ -107,12 +107,22 @@
                             android:progress="45"
                             app:trackThickness="8dp"
                             app:trackCornerRadius="4dp"
-                            android:layout_marginBottom="20dp"/>
+                            android:layout_marginBottom="8dp"/>
+                        <TextView
+                            android:id="@+id/progressPercentage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0% remaining (Ksh 0)"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:layout_gravity="center_horizontal"/>
 
+                        />
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
+
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -123,7 +133,7 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Current"
+                                    android:text="Current Ksh"
                                     android:textSize="14sp"
                                     android:alpha="0.7"/>
 
@@ -131,7 +141,7 @@
                                     android:id="@+id/groupWalletBalance"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Ksh 45,678"
+                                    android:text="Ksh "
                                     android:textSize="24sp"
                                     android:textStyle="bold"
                                     android:textColor="@color/primary_color"/>
@@ -155,7 +165,7 @@
                                     android:id="@+id/targetAmount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Ksh 100,000"
+                                    android:text="Ksh 400,770"
                                     android:textSize="24sp"
                                     android:textStyle="bold"
                                     android:textColor="@color/accent_color"/>
@@ -163,7 +173,6 @@
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
-
                 <!-- Quick Action Cards -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/quickActionsRecyclerView"

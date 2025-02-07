@@ -7,28 +7,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient3"
-    tools:context=".ui.login.Admin">
+    tools:context=".ui.user.Admin">
 
+    <!-- AppBarLayout with Centered Title -->
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
-        android:layout_width="318dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/rounded_appbar_background"
-        android:padding="16dp">
+        android:background="?attr/colorPrimary"
+    android:elevation="4dp"
+    android:padding="8dp"
+    android:fitsSystemWindows="true">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="0dp"
+        app:title="Admin Dashboard"
+        android:textColor="@color/admin_chip_background"
+        app:titleCentered="true"
+        app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+        android:background="?attr/colorPrimary"
+    app:popupTheme="@style/ThemeOverlay.Material3.Light" />
 
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:elevation="0dp"
-            android:textAlignment="center"
-            app:title="Admin Dashboard"
-            app:titleCentered="false"
-            app:titleTextAppearance="@style/TextAppearance.Material3.TitleLarge" />
-    </com.google.android.material.appbar.AppBarLayout>
-
+</com.google.android.material.appbar.AppBarLayout>
+    <!-- Scrollable Content -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,19 +44,15 @@
             android:padding="16dp"
             android:animateLayoutChanges="true">
 
-            <!-- Members Section with Card -->
+            <!-- Members Section -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/membersCard"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
                 app:cardElevation="2dp"
                 app:strokeWidth="0dp"
-                android:clickable="true"
-                android:focusable="true"
-                app:rippleColor="@color/ripple_color"
-                android:stateListAnimator="@animator/card_lift"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -61,14 +61,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:padding="16dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:gravity="center_vertical"
-                        android:layout_marginBottom="16dp">
+                        android:layout_marginBottom="12dp">
 
                         <ImageView
                             android:layout_width="32dp"
@@ -98,11 +98,13 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Quick Actions Grid with Animation -->
+            <!-- Quick Actions Grid -->
             <androidx.gridlayout.widget.GridLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/membersCard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:columnCount="2"
                 android:layout_marginTop="8dp">
 
@@ -110,42 +112,54 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/userManagementCard"
                     style="@style/DashboardCard"
+                    android:background="?attr/colorPrimary"
+
                     android:layout_margin="8dp"
                     app:layout_columnWeight="1">
 
                     <LinearLayout
-                        style="@style/DashboardCardContent">
+                        style="@style/DashboardCardContent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
 
                         <ImageView
                             style="@style/DashboardIcon"
-                            app:tint="@color/primary_color"
-                            android:src="@drawable/ic_profile" />
+                            android:src="@drawable/ic_profile"
+                            app:tint="@color/primary_color" />
 
                         <TextView
                             style="@style/DashboardTitle"
-                            android:text="UserManagement" />
+                            android:text="User Management"
+                            android:layout_marginTop="8dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/viewEditUsersButton"
-                            style="@style/Widget.Material3.Button.ElevatedButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
-                            android:backgroundTint="@color/primary_color"
                             android:layout_height="wrap_content"
                             android:text="Manage"
                             android:textAllCaps="false"
-                            app:elevation="4dp" />
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_marginTop="12dp"
+                            app:strokeColor="@color/primary_color"
+                            app:strokeWidth="1dp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <!-- Savings Updates Card -->
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/savingsUpdateCard"
+                    android:background="?attr/colorPrimary"
                     style="@style/DashboardCard"
                     android:layout_margin="8dp"
                     app:layout_columnWeight="1">
 
                     <LinearLayout
-                        style="@style/DashboardCardContent">
+                        style="@style/DashboardCardContent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
 
                         <ImageView
                             style="@style/DashboardIcon"
@@ -153,17 +167,20 @@
 
                         <TextView
                             style="@style/DashboardTitle"
-                            android:text="Savings Updates" />
+                            android:text="Savings Updates"
+                            android:layout_marginTop="8dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/updateSavingsButton"
-                            android:backgroundTint="@color/primary_color"
-                            style="@style/Widget.Material3.Button.ElevatedButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Update"
+                            android:textColor="?attr/colorOnSurface"
                             android:textAllCaps="false"
-                            app:elevation="4dp" />
+                            android:layout_marginTop="12dp"
+                            app:strokeColor="@color/primary_color"
+                            app:strokeWidth="1dp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -172,10 +189,14 @@
                     android:id="@+id/statisticsCard"
                     style="@style/DashboardCard"
                     android:layout_margin="8dp"
+                    android:background="?attr/colorPrimary"
                     app:layout_columnWeight="1">
 
                     <LinearLayout
-                        style="@style/DashboardCardContent">
+                        style="@style/DashboardCardContent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
 
                         <ImageView
                             style="@style/DashboardIcon"
@@ -183,17 +204,20 @@
 
                         <TextView
                             style="@style/DashboardTitle"
-                            android:text="Statistics" />
+                            android:text="Statistics"
+                            android:layout_marginTop="8dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/calculateStatsButton"
-                            style="@style/Widget.Material3.Button.ElevatedButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
-                            android:backgroundTint="@color/primary_color"
                             android:layout_height="wrap_content"
                             android:text="View"
+                            android:textColor="?attr/colorOnSurface"
                             android:textAllCaps="false"
-                            app:elevation="4dp" />
+                            android:layout_marginTop="12dp"
+                            app:strokeColor="@color/primary_color"
+                            app:strokeWidth="1dp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -201,35 +225,43 @@
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/reminderCard"
                     style="@style/DashboardCard"
+                    android:background="?attr/colorPrimary"
                     android:layout_margin="8dp"
                     app:layout_columnWeight="1">
 
                     <LinearLayout
-                        style="@style/DashboardCardContent">
+                        style="@style/DashboardCardContent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:padding="16dp">
 
                         <ImageView
                             style="@style/DashboardIcon"
-                            app:tint="@color/primary_color"
-                            android:src="@drawable/ic_notification" />
+                            android:src="@drawable/ic_notification"
+                            app:tint="@color/primary_color" />
 
                         <TextView
                             style="@style/DashboardTitle"
-                            android:text="Reminders" />
+                            android:text="Reminders"
+                            android:layout_marginTop="8dp" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/sendRemindersButton"
-                            style="@style/Widget.Material3.Button.ElevatedButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
                             android:layout_width="wrap_content"
-                            android:backgroundTint="@color/primary_color"
                             android:layout_height="wrap_content"
                             android:text="Send"
+                            android:textColor="?attr/colorOnSurface"
                             android:textAllCaps="false"
-                            app:elevation="4dp" />
+                            android:layout_marginTop="12dp"
+                            app:strokeColor="@color/primary_color"
+                            app:strokeWidth="1dp" />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
             </androidx.gridlayout.widget.GridLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>    </androidx.core.widget.NestedScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

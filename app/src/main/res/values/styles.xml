@@ -18,6 +18,12 @@
         <item name="android:stateListAnimator">@animator/card_lift</item>
     </style>
 
+    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Set status bar color -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item> <!-- Light icons for dark backgrounds -->
+    </style>
+
     <!-- Dashboard Card Content Style -->
     <style name="DashboardCardContent">
         <item name="android:layout_width">match_parent</item>

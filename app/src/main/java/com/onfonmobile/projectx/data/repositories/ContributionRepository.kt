@@ -3,6 +3,7 @@ import android.util.Log
 import com.onfonmobile.projectx.data.AppDatabase
 import com.onfonmobile.projectx.data.entities.Contribution
 import com.onfonmobile.projectx.data.entities.User
+import com.onfonmobile.projectx.data.entities.UserTotalContribution
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -44,4 +45,9 @@ suspend fun insertContribution(contribution: Contribution) {
         Log.d("ContributionRepository", "Getting all contributions for user $userId: ${contributions.joinToString { "${it.amount}" }}")
         return contributions
     }
+    suspend fun getTotalContributionsPerUser(): List<UserTotalContribution> {
+        return contributionDao.getTotalContributionsPerUser()
+    }
+
+
 }

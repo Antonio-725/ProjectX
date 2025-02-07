@@ -124,4 +124,24 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
             }
         }
     }
+    fun getTotalContributionsForAllUsers(onResult: (Map<Long, Double>) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val contributions = repository.getTotalContributionsPerUser()
+                val totalContributions = contributions.associate { it.userId to it.total }
+
+                _userContributions.postValue(totalContributions)
+
+                withContext(Dispatchers.Main) {
+                    onResult(totalContributions)
+                }
+            } catch (e: Exception) {
+                Log.e("AdminViewModel", "Error fetching total contributions for all users", e)
+                withContext(Dispatchers.Main) {
+                    onResult(emptyMap())
+                }
+            }
+        }
+    }
+
 }
