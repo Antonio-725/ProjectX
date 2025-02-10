@@ -77,53 +77,67 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
-
-                <!-- Summary Cards -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
                     android:layout_marginBottom="24dp"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="8dp">
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="10dp"
+                    app:strokeColor="@color/primary_color"
+                    app:strokeWidth="1dp"
+                    android:background="?attr/colorSurface">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:padding="20dp">
+                        android:padding="24dp">
 
+                        <!-- Title -->
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Investment Progress"
-                            android:textStyle="bold"
                             android:textSize="20sp"
-                            android:layout_marginBottom="16dp"/>
+                            android:textStyle="bold"
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="12dp"/>
 
+                        <!-- Progress Indicator -->
                         <com.google.android.material.progressindicator.LinearProgressIndicator
                             android:id="@+id/progressIndicator"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="10dp"
                             android:progress="45"
-                            app:trackThickness="8dp"
-                            app:trackCornerRadius="4dp"
-                            android:layout_marginBottom="8dp"/>
+                            app:trackThickness="10dp"
+                            app:trackCornerRadius="5dp"
+                            app:trackColor="@color/accent_color"
+                            app:indicatorColor="@color/primary_color"
+                            android:layout_marginBottom="12dp"/>
+
+                        <!-- Progress Percentage -->
                         <TextView
                             android:id="@+id/progressPercentage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="0% remaining (Ksh 0)"
+                            android:text="45% remaining (Ksh 180,346)"
                             android:textSize="16sp"
                             android:textStyle="bold"
-                            android:layout_gravity="center_horizontal"/>
+                            android:textColor="?attr/colorOnSurface"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginBottom="16dp"/>
 
-                        />
+                        <!-- Wallet Balance & Target Amount -->
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:weightSum="2"
+                            android:paddingTop="8dp">
 
-
+                            <!-- Wallet Balance -->
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -135,18 +149,21 @@
                                     android:layout_height="wrap_content"
                                     android:text="Current Ksh"
                                     android:textSize="14sp"
-                                    android:alpha="0.7"/>
+                                    android:textColor="?attr/colorOnSurface"
+                                    android:alpha="0.7"
+                                    android:layout_marginBottom="4dp"/>
 
                                 <TextView
                                     android:id="@+id/groupWalletBalance"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Ksh "
-                                    android:textSize="24sp"
+                                    android:text="Ksh 220,424"
+                                    android:textSize="22sp"
                                     android:textStyle="bold"
                                     android:textColor="@color/primary_color"/>
                             </LinearLayout>
 
+                            <!-- Target Amount -->
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -159,21 +176,25 @@
                                     android:layout_height="wrap_content"
                                     android:text="Target"
                                     android:textSize="14sp"
-                                    android:alpha="0.7"/>
+                                    android:textColor="?attr/colorOnSurface"
+                                    android:alpha="0.7"
+                                    android:layout_marginBottom="4dp"/>
 
                                 <TextView
                                     android:id="@+id/targetAmount"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Ksh 400,770"
-                                    android:textSize="24sp"
+                                    android:textSize="22sp"
                                     android:textStyle="bold"
                                     android:textColor="@color/accent_color"/>
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
-                <!-- Quick Action Cards -->
+
+
+            <!-- Quick Action Cards -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/quickActionsRecyclerView"
                     android:layout_width="match_parent"
