@@ -5,7 +5,9 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.onfonmobile.projectx.data.entities.Contribution
+import com.onfonmobile.projectx.data.entities.MonthlyContribution
 import com.onfonmobile.projectx.data.entities.UserTotalContribution
+//import com.onfonmobile.projectx.data.models.MonthlyContribution
 
 @Dao
 interface ContributionDao {
@@ -34,4 +36,13 @@ interface ContributionDao {
 
     @Query("SELECT * FROM contributions")
     suspend fun getAllContributions(): List<Contribution>
+
+    @Query("""
+    SELECT strftime('%m', datetime(date / 1000, 'unixepoch')) AS month,
+           SUM(amount) AS total
+    FROM contributions
+    GROUP BY month
+""")
+    suspend fun getTotalContributionsByMonth(): List<MonthlyContribution>
+
 }

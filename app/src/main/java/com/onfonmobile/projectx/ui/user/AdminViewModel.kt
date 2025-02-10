@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.onfonmobile.projectx.data.entities.Contribution
+import com.onfonmobile.projectx.data.entities.MonthlyContributionSummary
 import com.onfonmobile.projectx.data.entities.User
 import com.onfonmobile.projectx.data.repositories.ContributionRepository
 import kotlinx.coroutines.Dispatchers
@@ -141,6 +142,60 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
                     onResult(emptyMap())
                 }
             }
+        }
+    }
+    fun getMonthlyContributionSummary(onResult: (List<MonthlyContributionSummary>) -> Unit) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val monthlyContributions = repository.getTotalContributionsByMonth()
+
+                // Define target amounts for each month
+                val monthlyTargets = mapOf(
+                    "01" to 400.0, "02" to 400.0, "03" to 400.0, "04" to 400.0,
+                    "05" to 400.0, "06" to 400.0, "07" to 400.0, "08" to 400.0,
+                    "09" to 400.0, "10" to 400.0, "11" to 400.0, "12" to 400.0
+                )
+
+                // Process contributions
+                val summaryList = monthlyContributions.map { contribution ->
+                    val target = monthlyTargets[contribution.month] ?: 0.0
+                    val deficit = target - contribution.total
+                    val remark = if (deficit <= 0) "Met" else "Unmet"
+
+                    MonthlyContributionSummary(
+                        month = getMonthName(contribution.month),
+                        totalAmount = contribution.total,
+                        deficit = if (deficit > 0) deficit else 0.0,
+                        remark = remark
+                    )
+                }
+
+                withContext(Dispatchers.Main) {
+                    onResult(summaryList)
+                }
+            } catch (e: Exception) {
+                Log.e("AdminViewModel", "Error fetching monthly contributions", e)
+                withContext(Dispatchers.Main) {
+                    onResult(emptyList())
+                }
+            }
+        }
+    }
+    fun getMonthName(monthNumber: String): String {
+        return when (monthNumber) {
+            "01" -> "January"
+            "02" -> "February"
+            "03" -> "March"
+            "04" -> "April"
+            "05" -> "May"
+            "06" -> "June"
+            "07" -> "July"
+            "08" -> "August"
+            "09" -> "September"
+            "10" -> "October"
+            "11" -> "November"
+            "12" -> "December"
+            else -> "Unknown"
         }
     }
 

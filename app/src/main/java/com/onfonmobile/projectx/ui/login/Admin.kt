@@ -130,12 +130,7 @@ class Admin : AppCompatActivity() {
             calculateStatsButton.isEnabled = false
             sendRemindersButton.isEnabled = false
 
-//            // Optional: Hide buttons instead of disabling them
-//            updateSavingsButton.visibility = View.GONE
-//            viewEditUsersButton.visibility = View.GONE
-//            calculateStatsButton.visibility = View.GONE
-//            sendRemindersButton.visibility = View.GONE
-        }
+       }
 
        // showErrorMessage("You have read-only access.")
         showReadOnlyDialog()

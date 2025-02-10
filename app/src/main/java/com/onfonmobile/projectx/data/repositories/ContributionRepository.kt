@@ -2,6 +2,7 @@ package com.onfonmobile.projectx.data.repositories
 import android.util.Log
 import com.onfonmobile.projectx.data.AppDatabase
 import com.onfonmobile.projectx.data.entities.Contribution
+import com.onfonmobile.projectx.data.entities.MonthlyContribution
 import com.onfonmobile.projectx.data.entities.User
 import com.onfonmobile.projectx.data.entities.UserTotalContribution
 import kotlinx.coroutines.sync.Mutex
@@ -47,6 +48,9 @@ suspend fun insertContribution(contribution: Contribution) {
     }
     suspend fun getTotalContributionsPerUser(): List<UserTotalContribution> {
         return contributionDao.getTotalContributionsPerUser()
+    }
+    suspend fun getTotalContributionsByMonth(): List<MonthlyContribution> {
+        return contributionDao.getTotalContributionsByMonth()
     }
 
 
