@@ -187,7 +187,7 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
     }
 }
 
-    fun getMonthName(monthNumber: String): String {
+   private fun getMonthName(monthNumber: String): String {
         return when (monthNumber) {
             "01" -> "January"
             "02" -> "February"

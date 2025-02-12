@@ -16,7 +16,7 @@
     <group android:id="@+id/nav_admin_menu">
         <item
             android:id="@+id/nav_admin_page"
-            android:icon="@drawable/ic_profile"
+            android:icon="@drawable/admin"
             android:title="Admin Page"
             /> <!-- Set visibility to false initially -->
     </group>
@@ -24,8 +24,8 @@
     <group android:id="@+id/nav_secondary_menu">
         <item
             android:id="@+id/nav_settings"
-            android:icon="@drawable/ic_settings"
-            android:title="Settings"/>
+            android:icon="@drawable/signout"
+            android:title="Logout"/>
 
         <item
             android:id="@+id/nav_help"

@@ -7,8 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -20,6 +22,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.progressindicator.LinearProgressIndicator
+import com.google.android.material.snackbar.Snackbar
 import com.onfonmobile.projectx.R
 import com.onfonmobile.projectx.data.AppDatabase
 import com.onfonmobile.projectx.ui.Adapters.MonthlyContributionAdapter
@@ -116,6 +119,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+
     private fun openActivity(activityClass: Class<*>): Boolean {
         showProgressBar()
         startActivity(Intent(this, activityClass))
@@ -152,10 +157,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_search, R.id.action_notifications -> true
+            R.id.action_search -> {
+                refreshData() // Refresh all data when clicked
+                true
+            }
+            R.id.action_notifications -> true
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
     private fun updateNavigationHeader() {
         navigationView.getHeaderView(0)?.findViewById<TextView>(R.id.userName)?.text =
@@ -201,8 +211,60 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+//    private fun refreshData() {
+//        fetchTotalContributions()
+//        fetchMonthlyContributions()
+//    }
+
     private fun refreshData() {
-        fetchTotalContributions()
-        fetchMonthlyContributions()
+        // Show progress bar
+        showProgressBar()
+
+        // Show a Snackbar with a stylish UI when refreshing starts
+        val snackbar = Snackbar.make(findViewById(android.R.id.content), "Refreshing data...", Snackbar.LENGTH_INDEFINITE)
+        snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.facebook_blue)) // Custom background color
+        snackbar.setTextColor(ContextCompat.getColor(this, R.color.white)) // Text color
+        snackbar.show()
+
+        // Fetch total contributions
+        adminViewModel.getTotalContributionsForAllUsers { contributions ->
+            val totalAmount = contributions.values.sum()
+            val formattedTotal = NumberFormat.getNumberInstance(Locale.US).format(totalAmount)
+            val formattedTarget = NumberFormat.getNumberInstance(Locale.US).format(targetAmount)
+            val progressPercentage = ((totalAmount.toFloat() / targetAmount) * 100).coerceIn(0f, 100f).toInt()
+            val remainingPercentage = 100 - progressPercentage
+            val formattedRemainingAmount = NumberFormat.getNumberInstance(Locale.US)
+                .format((targetAmount - totalAmount).coerceAtLeast(0.0))
+
+            runOnUiThread {
+                totalContributionsTextView.text = "Ksh $formattedTotal"
+                targetAmountTextView.text = "Ksh $formattedTarget"
+                progressIndicator.setProgress(progressPercentage, true)
+                progressPercentageTextView.text = "$remainingPercentage% remaining (Ksh $formattedRemainingAmount)"
+
+                // Fetch Monthly Contributions
+                adminViewModel.getMonthlyContributionSummary { summaryList ->
+                    runOnUiThread {
+                        adapter = MonthlyContributionAdapter(summaryList)
+                        recyclerView.adapter = adapter
+
+                        // Hide progress bar
+                        hideProgressBar()
+
+                        // Dismiss the first Snackbar
+                        snackbar.dismiss()
+
+                        // Show a success Snackbar with an action button
+                        Snackbar.make(findViewById(android.R.id.content), "Data refreshed successfully!", Snackbar.LENGTH_LONG)
+                            .setBackgroundTint(ContextCompat.getColor(this@MainActivity, R.color.accent_color))
+                            .setTextColor(ContextCompat.getColor(this@MainActivity, R.color.white))
+                            .setAction("OK") { /* Do nothing, just dismiss */ }
+                            .setActionTextColor(ContextCompat.getColor(this@MainActivity, R.color.white))
+                            .show()
+                    }
+                }
+            }
+        }
     }
+
 }

@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:layout_marginTop="30dp"
-                android:background="@android:color/transparent"
+                android:background="@color/facebook_blue"
                 app:navigationIcon="@drawable/ic_menu"
                 app:title="Investment Dashboard"
                 app:titleTextColor="@color/white"
@@ -192,20 +192,11 @@
                         </LinearLayout>
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
-
-
-            <!-- Quick Action Cards -->
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/quickActionsRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="24dp"/>
-
                 <!-- Add Contribution Section -->
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
                     app:cardCornerRadius="16dp"
@@ -229,6 +220,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
+                            app:startIconTint="@color/black"
+                            app:boxStrokeColor="@color/facebook_blue"
+                            app:hintTextColor="@color/facebook_blue"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                             <com.google.android.material.textfield.TextInputEditText
@@ -237,6 +231,7 @@
                                 app:boxStrokeColor="@color/primary_color"
                                 android:layout_height="wrap_content"
                                 android:hint="Enter Amount"
+                                android:textColor="@color/accent_color"
                                 android:inputType="numberDecimal"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
