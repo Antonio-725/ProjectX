@@ -2,6 +2,7 @@ package com.onfonmobile.projectx.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.onfonmobile.projectx.data.entities.User
@@ -12,6 +13,10 @@ interface UserDao {
 
     @Insert
     suspend fun insert(user: User)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(users: List<User>) // Correct method signature
+
 
     @Query("SELECT * FROM users WHERE username = :username LIMIT 1")
     suspend fun getUserByUsername(username: String): User?

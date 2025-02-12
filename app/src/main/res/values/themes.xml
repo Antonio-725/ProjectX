@@ -1,10 +1,41 @@
+<!-- res/values/themes.xml (Light/Default theme) -->
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.ProjectX" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/white</item>
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">#114C78</item>
+        <item name="colorPrimaryVariant">#223A64</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+
+        <!-- Secondary colors -->
+        <item name="colorSecondary">#4A6267</item>
+        <item name="colorSecondaryVariant">#344649</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+
+        <!-- Background colors -->
+        <item name="android:colorBackground">#FAFAFA</item>
+        <item name="colorSurface">#FFFFFF</item>
+        <item name="colorOnSurface">#191C1D</item>
+
+        <!-- Error colors -->
+        <item name="colorError">#BA1A1A</item>
+        <item name="colorOnError">#FFFFFF</item>
+
+        <!-- Status bar and system bars -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">#191C1D</item>
+        <item name="android:textColorSecondary">#3F484A</item>
+
+        <!-- Ripple effect -->
+        <item name="colorControlHighlight">#1F000000</item>
     </style>
 
     <style name="Theme.ProjectX" parent="Base.Theme.ProjectX" />
 </resources>
+
+    <!-- res/values-night/themes.xml (Dark theme) -->

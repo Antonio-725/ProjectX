@@ -1,7 +1,34 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.ProjectX" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-         <item name="colorPrimary">@color/white</item>
+        <!-- Primary brand colors -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">#CCCCCC</item>
+        <item name="colorOnPrimary">#1C1C1E</item>
+
+        <!-- Secondary colors -->
+        <item name="colorSecondary">#BB86FC</item>
+        <item name="colorSecondaryVariant">#3700B3</item>
+        <item name="colorOnSecondary">#000000</item>
+
+        <!-- Background colors -->
+        <item name="android:colorBackground">#1C1C1E</item>
+        <item name="colorSurface">#2C2C2E</item>
+        <item name="colorOnSurface">#FFFFFF</item>
+
+        <!-- Error colors -->
+        <item name="colorError">#CF6679</item>
+        <item name="colorOnError">#000000</item>
+
+        <!-- Status bar and system bars -->
+        <item name="android:statusBarColor">#002B2D30</item>
+        <item name="android:navigationBarColor">?attr/colorSurface</item>
+
+        <!-- Text colors -->
+        <item name="android:textColorPrimary">#FFFFFF</item>
+        <item name="android:textColorSecondary">#B3FFFFFF</item>
+
+        <!-- Ripple effect -->
+        <item name="colorControlHighlight">#33FFFFFF</item>
     </style>
 </resources>

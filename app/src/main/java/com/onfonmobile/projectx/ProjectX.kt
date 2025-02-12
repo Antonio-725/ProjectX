@@ -2,11 +2,53 @@ package com.onfonmobile.projectx
 
 import android.app.Application
 import androidx.lifecycle.ViewModelProvider
+import androidx.work.Configuration
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.initialize
+import com.onfonmobile.projectx.Firestore.Helpers.Worker.SyncScheduler
+import android.util.Log
 
 class ProjectX : Application() {
     override fun onCreate() {
         super.onCreate()
-        // Initialize any application-wide dependencies or configurations here.
-        ViewModelProvider.AndroidViewModelFactory.getInstance(this)
+
+        try {
+            // Initialize Firebase
+            Firebase.initialize(this)
+            Log.d("ProjectX", "Firebase initialized successfully")
+
+            // Initialize ViewModelFactory
+            ViewModelProvider.AndroidViewModelFactory.getInstance(this)
+            Log.d("ProjectX", "ViewModelFactory initialized successfully")
+
+            // Initialize Firestore with offline caching
+            val firestore = FirebaseFirestore.getInstance()
+            val settings = FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true) // Enables offline caching
+                .setCacheSizeBytes(FirebaseFirestoreSettings.CACHE_SIZE_UNLIMITED) // Optional: Set unlimited cache size
+                .build()
+            firestore.firestoreSettings = settings
+            Log.d("ProjectX", "Firestore initialized with offline persistence")
+
+            // Initialize WorkManager with logging
+            val workManagerConfig = Configuration.Builder()
+                .setMinimumLoggingLevel(Log.DEBUG)
+                .build()
+            androidx.work.WorkManager.initialize(this, workManagerConfig)
+            Log.d("ProjectX", "WorkManager initialized successfully")
+
+            // Schedule periodic sync
+            SyncScheduler.scheduleSync(this)
+            Log.d("ProjectX", "Periodic sync scheduled successfully")
+
+        } catch (e: Exception) {
+            Log.e("ProjectX", "Error during application initialization", e)
+        }
+    }
+
+    companion object {
+        private const val TAG = "ProjectX"
     }
 }

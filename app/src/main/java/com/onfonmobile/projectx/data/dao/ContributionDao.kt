@@ -17,13 +17,15 @@ interface ContributionDao {
    @Insert(onConflict = OnConflictStrategy.REPLACE)
    suspend fun insertContribution(contribution: Contribution)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(contributions: List<Contribution>) // Correct method signature
 
-   // @Query("SELECT * FROM contributions WHERE userId = :userId")
+
+    // @Query("SELECT * FROM contributions WHERE userId = :userId")
    // suspend fun getContributionsByUserId(userId: Long): List<Contribution>
 
     @Query("SELECT DISTINCT * FROM contributions WHERE userId = :userId")
     suspend fun getContributionsByUserId(userId: Long): List<Contribution>
-
 
 
     @Query("SELECT SUM(amount) FROM contributions WHERE userId = :userId")

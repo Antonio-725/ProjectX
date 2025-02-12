@@ -25,11 +25,11 @@
         android:layout_height="?attr/actionBarSize"
         android:elevation="0dp"
         app:title="Admin Dashboard"
-        android:textColor="@color/admin_chip_background"
+        android:textColor="@color/black"
         app:titleCentered="true"
         app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
         android:background="?attr/colorPrimary"
-    app:popupTheme="@style/ThemeOverlay.Material3.Light" />
+        app:popupTheme="@style/Theme.ProjectX" />
 
 </com.google.android.material.appbar.AppBarLayout>
     <!-- Scrollable Content -->
