@@ -1,42 +1,175 @@
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="12dp"
-    android:background="@android:color/white"
-    android:elevation="2dp"
-    android:layout_marginBottom="8dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="#E0E0E0"
+    android:clickable="true"
+    android:focusable="true"
+    app:rippleColor="@color/ripple_color">
 
-    <TextView
-        android:id="@+id/monthTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="January"
-        android:textStyle="bold"
-        android:textSize="16sp"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/amountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Amount: KES 0.0"
-        android:textSize="14sp"
-        android:textColor="@android:color/holo_green_dark"/>
+        <!-- Header Section with Gradient Background -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp"
+            android:background="@drawable/card_header_gradient">
 
-    <TextView
-        android:id="@+id/deficitTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Deficit: KES 0.0"
-        android:textSize="14sp"
-        android:textColor="@android:color/holo_red_dark"/>
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_calender"
+                android:layout_marginEnd="12dp"/>
 
-    <TextView
-        android:id="@+id/remarkTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Remark: Met"
-        android:textSize="14sp"
-        android:textColor="@android:color/black"/>
-</LinearLayout>
+            <TextView
+                android:id="@+id/monthTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="January"
+                android:textStyle="bold"
+                android:textSize="22sp"
+                android:textColor="@color/facebook_blue"
+                />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/remarkTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Met"
+                android:textSize="12sp"
+                app:chipIcon="@drawable/ic_check_circle"
+
+                android:textColor="@color/white"
+                app:chipMinHeight="32dp"/>
+        </LinearLayout>
+
+        <!-- Content Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Amount Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/rounded_background1"
+                android:padding="12dp"
+                android:layout_marginBottom="8dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contribution Amount"
+                        android:textSize="14sp"
+                        android:textColor="#757575"
+                       />
+
+                    <TextView
+                        android:id="@+id/amountTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="KES 0.0"
+                        android:textSize="20sp"
+                        android:textColor="@color/admin_chip_text"
+
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_trending_up"
+                   />
+            </LinearLayout>
+
+            <!-- Deficit Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:background="@drawable/rounded_background_red"
+                android:padding="12dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Remaining Deficit"
+                        android:textSize="14sp"
+                        android:textColor="#757575"
+                       />
+
+                    <TextView
+                        android:id="@+id/deficitTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="KES 0.0"
+                        android:textSize="20sp"
+                        android:textColor="#E53535"
+
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_trending_down"
+                    />
+            </LinearLayout>
+
+            <!-- Progress Bar -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/contributionProgress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:trackThickness="8dp"
+                    app:trackCornerRadius="4dp"
+                    app:indicatorColor="@color/admin_chip_text"
+                    app:trackColor="#C34A4A"/>
+
+                <TextView
+                    android:id="@+id/progressText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="75%"
+                    android:textSize="12sp"
+                    android:textColor="#757575"
+                    android:layout_marginTop="12dp"/>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

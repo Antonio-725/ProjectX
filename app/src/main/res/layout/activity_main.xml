@@ -258,6 +258,7 @@
                     android:layout_height="wrap_content"
                     android:text="Recent Activities"
                     android:textStyle="bold"
+                    android:textColor="@color/accent_color"
                     android:textSize="20sp"
                     android:layout_marginBottom="16dp"/>
 

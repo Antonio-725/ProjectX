@@ -144,43 +144,49 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
             }
         }
     }
+
     fun getMonthlyContributionSummary(onResult: (List<MonthlyContributionSummary>) -> Unit) {
-        viewModelScope.launch(Dispatchers.IO) {
-            try {
-                val monthlyContributions = repository.getTotalContributionsByMonth()
+    viewModelScope.launch(Dispatchers.IO) {
+        try {
+            val monthlyContributions = repository.getTotalContributionsByMonth()
 
-                // Define target amounts for each month
-                val monthlyTargets = mapOf(
-                    "01" to 400.0, "02" to 400.0, "03" to 400.0, "04" to 400.0,
-                    "05" to 400.0, "06" to 400.0, "07" to 400.0, "08" to 400.0,
-                    "09" to 400.0, "10" to 400.0, "11" to 400.0, "12" to 400.0
+            // Define target amounts for each month
+            val monthlyTargets = mapOf(
+                "01" to  2976.0, "02" to 8190.0, "03" to 13680.0, "04" to 19170.0,
+                "05" to 24570.0, "06" to 29790.0, "07" to 35100.0, "08" to  40410.0,
+                "09" to 45720.0, "10" to 51030.0, "11" to 56340.0, "12" to  61650.0
+            )
+
+            // Process contributions
+            val summaryList = monthlyContributions.map { contribution ->
+                val target = monthlyTargets[contribution.month] ?: 0.0
+                val deficit = target - contribution.total
+                val remark = if (deficit <= 0) "Met" else "Unmet"
+
+                // Calculate percentage contribution towards target
+                val percentage = if (target > 0) (contribution.total / target) * 100 else 0.0
+
+                MonthlyContributionSummary(
+                    month = getMonthName(contribution.month),
+                    totalAmount = contribution.total,
+                    deficit = if (deficit > 0) deficit else 0.0,
+                    remark = remark,
+                    percentage = percentage
                 )
+            }
 
-                // Process contributions
-                val summaryList = monthlyContributions.map { contribution ->
-                    val target = monthlyTargets[contribution.month] ?: 0.0
-                    val deficit = target - contribution.total
-                    val remark = if (deficit <= 0) "Met" else "Unmet"
-
-                    MonthlyContributionSummary(
-                        month = getMonthName(contribution.month),
-                        totalAmount = contribution.total,
-                        deficit = if (deficit > 0) deficit else 0.0,
-                        remark = remark
-                    )
-                }
-
-                withContext(Dispatchers.Main) {
-                    onResult(summaryList)
-                }
-            } catch (e: Exception) {
-                Log.e("AdminViewModel", "Error fetching monthly contributions", e)
-                withContext(Dispatchers.Main) {
-                    onResult(emptyList())
-                }
+            withContext(Dispatchers.Main) {
+                onResult(summaryList)
+            }
+        } catch (e: Exception) {
+            Log.e("AdminViewModel", "Error fetching monthly contributions", e)
+            withContext(Dispatchers.Main) {
+                onResult(emptyList())
             }
         }
     }
+}
+
     fun getMonthName(monthNumber: String): String {
         return when (monthNumber) {
             "01" -> "January"

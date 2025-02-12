@@ -19,8 +19,10 @@
     <color name="primary_purple">#6C63FF</color>
     <color name="gray_text">#8A8A8E</color>
     <color name="facebook_blue">#3B5998</color>
+    <color name="success_color">#4CAF50</color>
 
-    <!-- White for dark mode --><!-- Black for light mode -->
+    <color name="error_color">#E53935</color>
+      <!-- White for dark mode --><!-- Black for light mode -->
 
 
 </resources>
