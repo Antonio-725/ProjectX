@@ -3,6 +3,8 @@ package com.onfonmobile.projectx.ui
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -23,6 +25,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
+import com.onfonmobile.projectx.Firestore.Helpers.Worker.SyncScheduler
 import com.onfonmobile.projectx.R
 import com.onfonmobile.projectx.data.AppDatabase
 import com.onfonmobile.projectx.ui.Adapters.MonthlyContributionAdapter
@@ -76,6 +79,27 @@ class MainActivity : AppCompatActivity() {
         val database = AppDatabase.getDatabase(this)
         val factory = AdminViewModelFactory(database)
         adminViewModel = ViewModelProvider(this, factory)[AdminViewModel::class.java]
+
+//        val database = AppDatabase.getDatabase(this)
+//        val factory = AdminViewModelFactory(database)
+//        adminViewModel = ViewModelProvider(this, factory)[AdminViewModel::class.java]
+
+        // Observe user and contribution changes to trigger sync
+        database.userDao().getAllUsersLiveData().observe(this) { users ->
+            if (users.isNotEmpty()) {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    SyncScheduler.triggerImmediateSync(this)
+                }, 3000) // Delayed sync for testing
+            }
+        }
+
+        database.contributionDao().getAllContributionsLiveData().observe(this) { contributions ->
+            if (contributions.isNotEmpty()) {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    SyncScheduler.triggerImmediateSync(this)
+                }, 3000) // Delayed sync for testing
+            }
+        }
 
         // Fetch and display data
         refreshData()
@@ -266,6 +290,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
 
 }

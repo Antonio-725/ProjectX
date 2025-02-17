@@ -1,5 +1,6 @@
 package com.onfonmobile.projectx.data.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -33,4 +34,7 @@ interface UserDao {
     @Transaction
     @Query("SELECT * FROM users")
     suspend fun getUsersWithContributions(): List<UserWithContributions>
+
+    @Query("SELECT * FROM users")
+    fun getAllUsersLiveData(): LiveData<List<User>>
 }

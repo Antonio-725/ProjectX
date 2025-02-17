@@ -1,5 +1,6 @@
 package com.onfonmobile.projectx.data.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -34,6 +35,10 @@ interface ContributionDao {
     // New method to get total contributions for all users
     @Query("SELECT userId, SUM(amount) as total FROM contributions GROUP BY userId")
     suspend fun getTotalContributionsPerUser(): List<UserTotalContribution>
+
+    @Query("SELECT * FROM contributions")
+    fun getAllContributionsLiveData(): LiveData<List<Contribution>>  // This is the LiveData version
+
 
 
     @Query("SELECT * FROM contributions")
