@@ -1,3 +1,5 @@
+
+package com.onfonmobile.projectx.Firestore.Helpers;
 import android.util.Log
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -9,8 +11,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-
-//package com.onfonmobile.projectx.Firestore.Helpers;
 //
 //import android.util.Log
 //import com.google.firebase.firestore.FirebaseFirestore
@@ -127,8 +127,8 @@ class FirestoreHelper {
                 "role" to user.role,
                 "timestamp" to FieldValue.serverTimestamp()
             )
-
-            val docRef = db.collection("users").document(user.id.toString())
+            // Use the UUID string as the document ID
+            val docRef = db.collection("users").document(user.id)
             docRef.set(userData)
                 .addOnSuccessListener {
                     Log.d("FirestoreHelper", "Successfully synced user ${user.id}")
@@ -138,6 +138,7 @@ class FirestoreHelper {
                 }
         }
     }
+
 
     fun syncContributions(contributions: List<Contribution>) {
         Log.d("FirestoreHelper", "Starting contribution sync with ${contributions.size} contributions")
@@ -169,7 +170,7 @@ class FirestoreHelper {
                 val users = querySnapshot.documents.mapNotNull { doc ->
                     try {
                         User(
-                            id = doc.getLong("id") ?: return@mapNotNull null,
+                            id = doc.getString("id") ?: return@mapNotNull null,
                             username = doc.getString("username") ?: return@mapNotNull null,
                             password = doc.getString("password") ?: return@mapNotNull null,
                             role = doc.getString("role") ?: return@mapNotNull null
@@ -205,7 +206,7 @@ class FirestoreHelper {
                     try {
                         Contribution(
                             id = doc.getLong("id") ?: return@mapNotNull null,
-                            userId = doc.getLong("userId") ?: return@mapNotNull null,
+                            userId = doc.getString("userId") ?: return@mapNotNull null,
                             amount = doc.getDouble("amount") ?: return@mapNotNull null,
                             date = doc.getLong("date") ?: return@mapNotNull null
                         )

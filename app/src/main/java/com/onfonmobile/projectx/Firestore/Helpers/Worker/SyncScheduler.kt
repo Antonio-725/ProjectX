@@ -14,7 +14,7 @@ import androidx.work.WorkManager
 
 
 object SyncScheduler {
-//    fun scheduleSync(context: android.content.Context) {
+    //    fun scheduleSync(context: android.content.Context) {
 //        val syncRequest = PeriodicWorkRequestBuilder<SyncWorker>(5, TimeUnit.SECONDS)
 //            .setConstraints(
 //                Constraints.Builder()
@@ -30,18 +30,18 @@ object SyncScheduler {
 //        )
 //
 //    }
-fun scheduleSync(context: Context) {
-    val syncRequest = OneTimeWorkRequestBuilder<SyncWorker>()
-        .setInitialDelay(3, TimeUnit.SECONDS)  // <-- 3 seconds delay for testing
-        .setConstraints(
-            Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-        )
-        .build()
+    fun scheduleSync(context: Context) {
+        val syncRequest = OneTimeWorkRequestBuilder<SyncWorker>()
+            .setInitialDelay(3, TimeUnit.SECONDS)  // <-- 3 seconds delay for testing
+            .setConstraints(
+                Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build()
+            )
+            .build()
 
-    WorkManager.getInstance(context).enqueue(syncRequest)
-}
+        WorkManager.getInstance(context).enqueue(syncRequest)
+    }
 
     // Add this to SyncScheduler
     fun triggerImmediateSync(context: Context) {

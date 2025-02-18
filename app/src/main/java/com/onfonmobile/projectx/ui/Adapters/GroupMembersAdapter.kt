@@ -11,10 +11,10 @@ import com.onfonmobile.projectx.databinding.ItemGroupMemberBinding
 class GroupMembersAdapter(
     private var userList: MutableList<User>,
     private val onUserClicked: ((User) -> Unit)? = null,
-    private val onTotalContributionFetched: ((Long, (Double) -> Unit) -> Unit) // Pass total contribution callback
+    private val onTotalContributionFetched: ((String, (Double) -> Unit) -> Unit) // Pass total contribution callback
 ) : RecyclerView.Adapter<GroupMembersAdapter.UserViewHolder>() {
 
-    private val userContributions = mutableMapOf<Long, Double>() // Cache contributions
+    private val userContributions = mutableMapOf<String, Double>() // Cache contributions
 
     inner class UserViewHolder(private val binding: ItemGroupMemberBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(user: User) {
