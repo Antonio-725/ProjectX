@@ -14,32 +14,26 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class AdminViewModel(private val repository: ContributionRepository) : ViewModel() {
+
+    // This LiveData will hold a map of userId -> total contribution
     private val _userContributions = MutableLiveData<Map<String, Double>>()
     val userContributions: LiveData<Map<String, Double>> get() = _userContributions
 
+    // LiveData for a single user’s total contribution using repository’s live query.
+    // (Assumes repository.getTotalContributionByUserLive(userId: String) is implemented.)
+    fun observeTotalContribution(userId: String): LiveData<Double?> {
+        return repository.getTotalContributionByUserLive(userId)
+    }
+
+    // For one-time retrieval (if needed), we still offer a suspend function.
     fun getTotalContribution(userId: String, onResult: (Double) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                // Debug: Check if there's a cached value
-                val cachedAmount = _userContributions.value?.get(userId)
-                Log.d("AdminViewModel", "Cached amount for user $userId: $cachedAmount")
-
-                // Get fresh total from database
                 val databaseTotal = repository.getTotalContributionByUser(userId) ?: 0.0
-                Log.d("AdminViewModel", "Database total for user $userId: $databaseTotal")
-
-                // Get all contributions for verification
-                val allContributions = repository.getContributionsByUser(userId)
-                Log.d("AdminViewModel", "All contributions for user $userId: ${allContributions.joinToString { "${it.amount}" }}")
-
-                val manualSum = allContributions.sumOf { it.amount }
-                Log.d("AdminViewModel", "Manual sum for user $userId: $manualSum")
-
-                // Update cache with verified amount
+                // Update cache for later use if needed
                 val updatedContributions = _userContributions.value?.toMutableMap() ?: mutableMapOf()
                 updatedContributions[userId] = databaseTotal
                 _userContributions.postValue(updatedContributions)
-
                 withContext(Dispatchers.Main) {
                     onResult(databaseTotal)
                 }
@@ -84,9 +78,7 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
                     val totalAfter = repository.getTotalContributionByUser(user.id) ?: 0.0
                     Log.d("AdminViewModel", "Total after saving: $totalAfter")
 
-                    val difference = totalAfter - totalBefore
-                    Log.d("AdminViewModel", "Difference in total: $difference (expected: $amount)")
-
+                    // Update the LiveData cache; this may be redundant if you observe live DB updates.
                     val updatedContributions = _userContributions.value?.toMutableMap() ?: mutableMapOf()
                     updatedContributions[user.id] = totalAfter
                     _userContributions.postValue(updatedContributions)
@@ -110,7 +102,9 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
                 Log.d("AdminViewModel", "saveContribution completed")
             }
         }
-    }    fun loadUsers(onResult: (List<User>) -> Unit) {
+    }
+
+    fun loadUsers(onResult: (List<User>) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val users = repository.getAllUsers()
@@ -125,14 +119,15 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
             }
         }
     }
+
+    // Instead of manually fetching all totals, we can observe live updates.
+    // This function is provided if you need a one-time callback.
     fun getTotalContributionsForAllUsers(onResult: (Map<String, Double>) -> Unit) {
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val contributions = repository.getTotalContributionsPerUser()
                 val totalContributions = contributions.associate { it.userId to it.total }
-
                 _userContributions.postValue(totalContributions)
-
                 withContext(Dispatchers.Main) {
                     onResult(totalContributions)
                 }
@@ -144,6 +139,7 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
             }
         }
     }
+
 
     fun getMonthlyContributionSummary(onResult: (List<MonthlyContributionSummary>) -> Unit) {
     viewModelScope.launch(Dispatchers.IO) {
