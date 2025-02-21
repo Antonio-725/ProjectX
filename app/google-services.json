@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "819594163438",
+    "project_id": "project-x-dd57c",
+    "storage_bucket": "project-x-dd57c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819594163438:android:689a5e156077281aa8efff",
+        "android_client_info": {
+          "package_name": "com.onfonmobile.projectx"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR5sqVUvX06gHQ-tIhCcwrGWb2s0wFMSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
