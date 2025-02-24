@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_search"
-        android:icon="@drawable/refresh"
+        android:icon="@drawable/feedback_cycle_loop"
         
         android:title="Refresh"
         app:showAsAction="ifRoom" />

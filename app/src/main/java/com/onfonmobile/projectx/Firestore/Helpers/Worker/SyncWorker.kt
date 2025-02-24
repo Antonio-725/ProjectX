@@ -34,7 +34,9 @@ class SyncWorker(
             // Check internet before syncing
             if (!NetworkUtils.isOnline(applicationContext)) {
                 Log.w("SyncWorker", "No internet connection. Retrying sync later.")
-                return@withContext Result.retry()
+                //return@withContext Result.retry()
+                return@withContext Result.failure()
+
             }
 
             // Sync to Firestore
@@ -60,10 +62,12 @@ class SyncWorker(
                 Log.w("SyncWorker", "Retrying sync (attempt $runAttemptCount)...")
                 Result.retry()
             } else {
+               // Result.failure()
                 Result.failure()
             }
         }
     }
+
 
 
     companion object {

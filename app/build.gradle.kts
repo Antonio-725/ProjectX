@@ -69,6 +69,7 @@ dependencies {
     implementation(libs.androidx.databinding.runtime)
     implementation(libs.androidx.databinding.adapters)
     implementation (libs.jbcrypt)
+
     implementation ("com.github.bumptech.glide:glide:4.12.0")
 
     val roomVersion = "2.6.1"

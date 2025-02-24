@@ -2,9 +2,9 @@
 <resources>
     <style name="ToolbarTitle" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/white</item>
-
+        <item name="android:textColor">@color/black</item>
     </style>
+
     <!-- Dashboard Card Style -->
     <style name="DashboardCard" parent="Widget.MaterialComponents.CardView">
         <item name="android:layout_width">0dp</item>
@@ -17,6 +17,18 @@
         <item name="rippleColor">@color/ripple_color</item>
         <item name="android:stateListAnimator">@animator/card_lift</item>
     </style>
+
+
+
+    <style name="ToolbarStyle" parent="Widget.Material3.Toolbar">
+        <!-- Use your defined ToolbarTitle for title text appearance -->
+        <item name="titleTextAppearance">@style/ToolbarTitle</item>
+        <!-- Use a dark mode–friendly background. This attribute should resolve properly in both modes -->
+        <item name="android:background">?attr/colorPrimary</item>
+        <!-- Optionally adjust popup theme for menu items -->
+        <item name="popupTheme">@style/ThemeOverlay.Material3.ActionBar</item>
+    </style>
+
 
     <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Set status bar color -->

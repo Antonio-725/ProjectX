@@ -15,23 +15,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
-    android:elevation="4dp"
-    android:padding="8dp"
-    android:fitsSystemWindows="true">
+        android:elevation="4dp"
+        android:padding="8dp"
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/topAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:elevation="0dp"
-        app:title="Admin Dashboard"
-        android:textColor="@color/black"
-        app:titleCentered="true"
-        app:titleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/Theme.ProjectX" />
+        android:fitsSystemWindows="true">
 
-</com.google.android.material.appbar.AppBarLayout>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:elevation="0dp"
+            app:title="Admin Dashboard"
+            app:titleCentered="true"
+            app:titleTextAppearance="@style/ToolbarTitle"
+            android:background="?attr/colorPrimary"
+            app:menu="@menu/toolbar_menu"
+            app:popupTheme="@style/ThemeOverlay.Material3.Light"
+            android:theme="?attr/actionBarTheme" />
+    </com.google.android.material.appbar.AppBarLayout>
     <!-- Scrollable Content -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -200,7 +201,8 @@
 
                         <ImageView
                             style="@style/DashboardIcon"
-                            android:src="@drawable/barchart" />
+                            android:src="@drawable/ic_stats"
+                            app:tint="@color/primary_color"/>
 
                         <TextView
                             style="@style/DashboardTitle"

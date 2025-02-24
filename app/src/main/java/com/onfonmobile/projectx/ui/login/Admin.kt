@@ -2,15 +2,21 @@ package com.onfonmobile.projectx.ui.user
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 import com.onfonmobile.projectx.R
 import com.onfonmobile.projectx.data.AppDatabase
 import com.onfonmobile.projectx.data.entities.User
@@ -43,11 +49,36 @@ class Admin : AppCompatActivity() {
         viewModel = ViewModelProvider(this, AdminViewModelFactory(db)).get(AdminViewModel::class.java)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        Log.d("Admin", "Menu inflated: ${menu.size()} items")
+        // Loop through menu items to verify IDs
+        for (i in 0 until menu.size()) {
+            val item = menu.getItem(i)
+            Log.d("Admin", "Menu item: ${item.itemId} with title: ${item.title}")
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        Log.d("Admin", "Menu item clicked: ${item.itemId} with title: ${item.title}")
+        return when (item.itemId) {
+            R.id.action_refresh -> {
+                Log.d("Admin", "Refresh action triggered")
+                refreshData()
+                true
+            }
+            else -> {
+                Log.d("Admin", "Unhandled menu item clicked")
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
     private fun setupRecyclerView() {
         adapter = GroupMembersAdapter(
             userList = mutableListOf(),
             onUserClicked = { user ->
-                // Show user details or edit dialog
                 showUserDetailsDialog(user)
             },
             onTotalContributionFetched = { userId, callback ->
@@ -57,34 +88,27 @@ class Admin : AppCompatActivity() {
             }
         )
 
-        binding.apply {
-            // Setup RecyclerView within membersCard
-            groupMembersRecyclerView.apply {
-                layoutManager = LinearLayoutManager(this@Admin)
-                adapter = this@Admin.adapter
-                setHasFixedSize(true)
-            }
+        binding.groupMembersRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@Admin)
+            adapter = this@Admin.adapter
+            setHasFixedSize(true)
         }
     }
 
     private fun setupDashboardActions() {
         binding.apply {
-            // Savings Updates
             updateSavingsButton.setOnClickListener {
                 showContributionDialog()
             }
 
-            // User Management
             viewEditUsersButton.setOnClickListener {
                 showUserManagementDialog()
             }
 
-            // Statistics
             calculateStatsButton.setOnClickListener {
                 navigateToStatistics()
             }
 
-            // Reminders
             sendRemindersButton.setOnClickListener {
                 showRemindersDialog()
             }
@@ -114,8 +138,6 @@ class Admin : AppCompatActivity() {
         }.show()
     }
 
-
-
     private fun checkUserRole() {
         val sessionManager = SessionManager(this)
         if (!sessionManager.isAdmin()) {
@@ -129,14 +151,12 @@ class Admin : AppCompatActivity() {
             viewEditUsersButton.isEnabled = false
             calculateStatsButton.isEnabled = false
             sendRemindersButton.isEnabled = false
-
-       }
-
-       // showErrorMessage("You have read-only access.")
+        }
         showReadOnlyDialog()
     }
+
     private fun showReadOnlyDialog() {
-        val dialog = com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+        val dialog = MaterialAlertDialogBuilder(this)
             .setTitle("Access Restricted")
             .setMessage("You are not the admin. You have read-only permission on this page.")
             .setPositiveButton("OK") { dialog, _ ->
@@ -145,9 +165,35 @@ class Admin : AppCompatActivity() {
             .setCancelable(false)
             .show()
 
-        // Customize button color
-        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
-            .setTextColor(resources.getColor(R.color.facebook_blue, theme)) // Change to a color that fits your theme
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setTextColor(resources.getColor(R.color.facebook_blue, theme))
+    }
+
+    // Improved refreshData method
+    private fun refreshData() {
+        // Show loading indicator
+        val snackbar = Snackbar.make(binding.root, "Refreshing data...", Snackbar.LENGTH_INDEFINITE)
+        snackbar.setBackgroundTint(ContextCompat.getColor(this, R.color.facebook_blue))
+        snackbar.setTextColor(ContextCompat.getColor(this, R.color.white))
+        snackbar.show()
+        Log.d("Admin", "Refreshing data...")
+
+        // Refresh user list
+        viewModel.loadUsers { users ->
+            // Use the new refreshData method that we added to the adapter
+            adapter.refreshData(users)
+
+            Log.d("Admin", "User list refreshed with ${users.size} users.")
+
+            // Optional: refresh additional dashboard data if needed
+            viewModel.getTotalContributionsForAllUsers { contributions ->
+                runOnUiThread {
+                    snackbar.dismiss()
+                    Toast.makeText(this, "Data refreshed successfully!", Toast.LENGTH_SHORT).show()
+                    Log.d("Admin", "Refresh complete, Snackbar dismissed.")
+                }
+            }
+        }
     }
 
 
