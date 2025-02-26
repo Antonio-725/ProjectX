@@ -22,7 +22,14 @@
     <color name="success_color">#4CAF50</color>
 
     <color name="error_color">#E53935</color>
-      <!-- White for dark mode --><!-- Black for light mode -->
+
+
+    <!-- Add these to your res/values/colors.xml file -->
+    <color name="card_user_management">#5E35B1</color>
+    <color name="card_savings_updates">#1E88E5</color>
+    <color name="card_statistics">#43A047</color>
+    <color name="card_reminders">#FB8C00</color>
+
 
 
 </resources>

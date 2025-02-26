@@ -5,20 +5,105 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <!-- Dashboard Card Style -->
-    <style name="DashboardCard" parent="Widget.MaterialComponents.CardView">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="cardCornerRadius">20dp</item>
+    <!-- Add these styles to your res/values/styles.xml file -->
+    <style name="DashboardCard" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardCornerRadius">16dp</item>
         <item name="cardElevation">2dp</item>
         <item name="strokeWidth">0dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:clickable">true</item>
         <item name="android:focusable">true</item>
-        <item name="rippleColor">@color/ripple_color</item>
-        <item name="android:stateListAnimator">@animator/card_lift</item>
+        <item name="cardBackgroundColor">?attr/colorSurface</item>
+        <item name="rippleColor">?attr/colorPrimaryVariant</item>
     </style>
 
+    <style name="DashboardCardContent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 
+    <style name="DashboardIcon">
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="tint">?attr/colorPrimary</item>
+    </style>
+
+    <style name="DashboardTitle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
+
+    <!-- Dashboard Card Style -->
+<!--    <style name="DashboardCard" parent="Widget.MaterialComponents.CardView">-->
+<!--        <item name="android:layout_width">0dp</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="cardCornerRadius">20dp</item>-->
+<!--        <item name="cardElevation">2dp</item>-->
+<!--        <item name="strokeWidth">0dp</item>-->
+<!--        <item name="android:clickable">true</item>-->
+<!--        <item name="android:focusable">true</item>-->
+<!--        <item name="rippleColor">@color/ripple_color</item>-->
+<!--        <item name="android:stateListAnimator">@animator/card_lift</item>-->
+<!--    </style>-->
+
+<!--    &lt;!&ndash; Dashboard Card Content Style &ndash;&gt;-->
+<!--    <style name="DashboardCardContent">-->
+<!--        <item name="android:layout_width">match_parent</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="android:orientation">vertical</item>-->
+<!--        <item name="android:padding">20dp</item>-->
+<!--        <item name="android:gravity">center_horizontal</item>-->
+<!--    </style>-->
+
+<!--    &lt;!&ndash; Dashboard Icon Style &ndash;&gt;-->
+<!--    <style name="DashboardIcon">-->
+<!--        <item name="android:layout_width">48dp</item>-->
+<!--        <item name="android:layout_height">48dp</item>-->
+<!--        <item name="android:layout_marginBottom">16dp</item>-->
+<!--        <item name="android:padding">4dp</item>-->
+<!--    </style>-->
+
+<!--    &lt;!&ndash; Dashboard Title Style &ndash;&gt;-->
+<!--    <style name="DashboardTitle" parent="TextAppearance.Material3.TitleMedium">-->
+<!--        <item name="android:layout_width">wrap_content</item>-->
+<!--        <item name="android:layout_height">wrap_content</item>-->
+<!--        <item name="android:layout_marginBottom">12dp</item>-->
+<!--        <item name="android:textColor">@color/primary_color</item>-->
+<!--    </style>-->
+
+    <style name="NavDrawerTextStyle" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textSize">14sp</item>
+
+    </style>
+    <style name="CircleImageView">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="CustomDatePickerTheme" parent="ThemeOverlay.Material3.MaterialCalendar">
+        <!-- Customize your date picker theme here if needed -->
+        <item name="colorPrimary">@color/accent_color</item>
+        <item name="colorOnPrimary">@color/facebook_blue</item>
+    </style>
+    <style name="CircularImageStyle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">60%</item>
+    </style>
+
+    <!-- Add to res/values/colors.xml -->
+
+        <color name="role_chip_background">#E0F7FA</color>
+        <color name="role_chip_text">#00838F</color>
+
+        <!-- Define different role chip colors -->
+        <color name="admin_chip_background">#E8F5E9</color>
+        <color name="admin_chip_text">#2E7D32</color>
+        <color name="user_chip_background">#E3F2FD</color>
+        <color name="user_chip_text">#1565C0</color>
 
     <style name="ToolbarStyle" parent="Widget.Material3.Toolbar">
         <!-- Use your defined ToolbarTitle for title text appearance -->
@@ -35,56 +120,5 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item> <!-- Light icons for dark backgrounds -->
     </style>
-
-    <!-- Dashboard Card Content Style -->
-    <style name="DashboardCardContent">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:padding">20dp</item>
-        <item name="android:gravity">center_horizontal</item>
-    </style>
-
-    <!-- Dashboard Icon Style -->
-    <style name="DashboardIcon">
-        <item name="android:layout_width">48dp</item>
-        <item name="android:layout_height">48dp</item>
-        <item name="android:layout_marginBottom">16dp</item>
-        <item name="android:padding">4dp</item>
-    </style>
-
-    <!-- Dashboard Title Style -->
-    <style name="DashboardTitle" parent="TextAppearance.Material3.TitleMedium">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">12dp</item>
-        <item name="android:textColor">@color/primary_color</item>
-    </style>
-
-    <style name="NavDrawerTextStyle" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="android:textSize">14sp</item>
-
-    </style>
-    <style name="CircleImageView">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-    </style>
-
-    <style name="CustomDatePickerTheme" parent="ThemeOverlay.Material3.MaterialCalendar">
-        <!-- Customize your date picker theme here if needed -->
-        <item name="colorPrimary">@color/accent_color</item>
-        <item name="colorOnPrimary">@color/facebook_blue</item>
-    </style>
-
-    <!-- Add to res/values/colors.xml -->
-
-        <color name="role_chip_background">#E0F7FA</color>
-        <color name="role_chip_text">#00838F</color>
-
-        <!-- Define different role chip colors -->
-        <color name="admin_chip_background">#E8F5E9</color>
-        <color name="admin_chip_text">#2E7D32</color>
-        <color name="user_chip_background">#E3F2FD</color>
-        <color name="user_chip_text">#1565C0</color>
 
 </resources>

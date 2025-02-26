@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="200dp"
-    android:background="?attr/colorPrimary"
+    android:background="@color/facebook_blue"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/userImage"
-        android:layout_width="80dp"
+        android:layout_width="120dp"
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
+        android:padding="9dp"
+        android:background="?attr/colorSurface"
         android:src="@drawable/investation"
+        app:shapeAppearanceOverlay="@style/CircularImageStyle"
+        app:strokeColor="?attr/colorPrimary"
+        app:strokeWidth="2dp"
         android:contentDescription="User Profile" />
 
     <TextView
@@ -20,8 +26,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="12dp"
         android:text="John Doe"
         android:textSize="18sp"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:textStyle="bold" />
 </LinearLayout>

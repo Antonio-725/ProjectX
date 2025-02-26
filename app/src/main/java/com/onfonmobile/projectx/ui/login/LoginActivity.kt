@@ -1,6 +1,7 @@
 package com.onfonmobile.projectx.ui.activities
 
 import RegisterViewModel
+
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -12,15 +13,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
+import com.onfonmobile.projectx.Firestore.Helpers.Utils.NetworkUtils
 import com.onfonmobile.projectx.R
-import com.onfonmobile.projectx.databinding.ActivityLoginBinding
-import com.onfonmobile.projectx.ui.viewmodel.UserViewModelFactory
 import com.onfonmobile.projectx.data.AppDatabase
+import com.onfonmobile.projectx.databinding.ActivityLoginBinding
 import com.onfonmobile.projectx.ui.MainActivity
 import com.onfonmobile.projectx.ui.di.SessionManager
 import com.onfonmobile.projectx.ui.register.RegistrationActivity
+import com.onfonmobile.projectx.ui.utils.NoInternet
+import com.onfonmobile.projectx.ui.viewmodel.UserViewModelFactory
 import kotlinx.coroutines.launch
 import org.mindrot.jbcrypt.BCrypt
+
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -31,6 +35,17 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        // Check if internet is available
+        if (!NetworkUtils.isOnline(this)) {
+            startActivity(Intent(this, NoInternet::class.java))
+            finish() // Close LoginActivity if no internet
+            return
+        }
+
+     //   setContentView(com.onfonmobile.projectx.R.layout.activity_login)
+
 
         // Initialize SessionManager
         sessionManager = SessionManager(this)
