@@ -2,6 +2,7 @@ package com.onfonmobile.projectx.ui.di
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import java.util.Date
 
 class SessionManager(context: Context) {
@@ -64,9 +65,9 @@ fun getUserId(): String? {
         return sharedPreferences.getString(KEY_USER_ROLE, null)
     }
 
-    fun isAdmin(): Boolean {
-        return getUserRole() == "admin"
-    }
+//    fun isAdmin(): Boolean {
+//        return getUserRole() == "admin"
+//    }
 
     fun logout() {
         editor.apply {
@@ -74,4 +75,23 @@ fun getUserId(): String? {
             apply()
         }
     }
+    // In SessionManager class add these methods:
+
+    // Update user role - call this after role changes
+    fun updateUserRole(userRole: String) {
+        editor.putString(KEY_USER_ROLE, userRole.lowercase()) // Store in lowercase for consistency
+        editor.apply()
+
+        Log.d("SessionManager", "Updated user role to: $userRole")
+    }
+
+    // Make isAdmin() case-insensitive
+    fun isAdmin(): Boolean {
+        val role = getUserRole()
+        val isAdmin = role?.equals("admin", ignoreCase = true) ?: false
+
+        Log.d("SessionManager", "Checking isAdmin(): role=$role, result=$isAdmin")
+        return isAdmin
+    }
+
 }

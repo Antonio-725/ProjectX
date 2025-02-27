@@ -19,18 +19,3 @@ data class Contribution(
     val amount: Double,        // Contribution amount
     val date: Long             // Date of contribution (timestamp)
 )
-//@Entity(
-//    tableName = "contributions",
-//    foreignKeys = [ForeignKey(
-//        entity = User::class,
-//        parentColumns = ["id"],
-//        childColumns = ["userId"],
-//        onDelete = ForeignKey.CASCADE
-//    )]
-//)
-//data class Contribution(
-//    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-//    val userId: String,          // Changed to String
-//    val amount: Double,
-//    val date: Long
-//)

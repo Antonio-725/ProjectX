@@ -61,20 +61,18 @@ class ContributionDialog(
 
         // Custom date picker dialog
         // Get today's date
+        // Get today's date
         val today = Calendar.getInstance()
         today.set(Calendar.HOUR_OF_DAY, 0) // Reset to start of the day
 
-// Set constraints to allow only today and future dates
-        val constraints = CalendarConstraints.Builder()
-            .setStart(today.timeInMillis) // Prevent past dates
-            .build()
+// Remove the start constraint to allow past months
+        val constraints = CalendarConstraints.Builder().build()
 
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setTitleText("Select Contribution Date")
             .setSelection(today.timeInMillis) // Default to today
-            .setCalendarConstraints(constraints)
-            .setTheme(R.style.CustomDatePickerTheme)// Apply constraints
-           // .setTheme(com.google.android.material.R.style.ThemeOverlay_Material3_MaterialCalendar)
+            .setCalendarConstraints(constraints) // Apply constraints
+            .setTheme(R.style.CustomDatePickerTheme)
             .build()
 
         // Date picker callbacks

@@ -10,16 +10,5 @@ data class User(
     @PrimaryKey val id: String = UUID.randomUUID().toString(),
     val username: String,
     val password: String, // Store hashed password
-    val role: String // "admin" or "user"
+    var role: String // "admin" or "user"
 )
-//@Entity(tableName = "users")
-//data class User(
-//    @PrimaryKey(autoGenerate = true)
-//    val id: Long = 0,
-//    val firestoreId: String? = null,
-//    val username: String,
-//    val password: String,
-//    val role: String,
-//    val deviceId: String? = null,
-//    val lastUpdated: Long = System.currentTimeMillis()
-//)

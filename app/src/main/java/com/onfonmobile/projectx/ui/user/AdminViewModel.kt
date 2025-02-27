@@ -199,170 +199,33 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
             else -> "Unknown"
         }
     }
-
-
-//class AdminViewModel(private val repository: ContributionRepository) : ViewModel() {
-//    private val _userContributions = MutableLiveData<Map<String, Double>>()
-//    val userContributions: LiveData<Map<String, Double>> get() = _userContributions
-//
-//    fun getTotalContribution(userId: String, onResult: (Double) -> Unit) {
+//    fun updateUsers(users: List<User>) {
 //        viewModelScope.launch(Dispatchers.IO) {
 //            try {
-//                val cachedAmount = _userContributions.value?.get(userId)
-//                Log.d("AdminViewModel", "Cached amount for user $userId: $cachedAmount")
-//
-//                val databaseTotal = repository.getTotalContributionByUser(userId) ?: 0.0
-//                Log.d("AdminViewModel", "Database total for user $userId: $databaseTotal")
-//
-//                val allContributions = repository.getContributionsByUser(userId)
-//                Log.d("AdminViewModel", "All contributions for user $userId: ${allContributions.joinToString { "${it.amount}" }}")
-//
-//                val manualSum = allContributions.sumOf { it.amount }
-//                Log.d("AdminViewModel", "Manual sum for user $userId: $manualSum")
-//
-//                val updatedContributions = _userContributions.value?.toMutableMap() ?: mutableMapOf()
-//                updatedContributions[userId] = databaseTotal
-//                _userContributions.postValue(updatedContributions)
-//
-//                withContext(Dispatchers.Main) {
-//                    onResult(databaseTotal)
-//                }
+//                users.forEach { repository.updateUser(it) }
 //            } catch (e: Exception) {
-//                Log.e("AdminViewModel", "Error fetching contributions for userId: $userId", e)
-//                withContext(Dispatchers.Main) {
-//                    onResult(0.0)
-//                }
+//                Log.e("AdminViewModel", "Failed to update users", e)
 //            }
 //        }
 //    }
-//
-//    private var isSaving = false
-//
-//    fun saveContribution(
-//        username: String,
-//        amount: Double,
-//        date: Long,
-//        onSuccess: () -> Unit,
-//        onError: (String) -> Unit
-//    ) {
-//        Log.d("AdminViewModel", "saveContribution called - Username: $username, Amount: $amount")
-//        if (isSaving) {
-//            Log.d("AdminViewModel", "saveContribution already in progress, skipping")
-//            return
-//        }
-//        isSaving = true
-//
-//        viewModelScope.launch(Dispatchers.IO) {
-//            try {
-//                Log.d("AdminViewModel", "Fetching user by username: $username")
-//                val user = repository.getUserByUsername(username)
-//                if (user != null) {
-//                    Log.d("AdminViewModel", "User found - ID: ${user.id}")
-//                    val totalBefore = repository.getTotalContributionByUser(user.id) ?: 0.0
-//                    Log.d("AdminViewModel", "Total before saving: $totalBefore")
-//
-//                    val contribution = Contribution(userId = user.id, amount = amount, date = date)
-//                    Log.d("AdminViewModel", "Inserting contribution: $contribution")
-//                    repository.insertContribution(contribution)
-//
-//                    val totalAfter = repository.getTotalContributionByUser(user.id) ?: 0.0
-//                    Log.d("AdminViewModel", "Total after saving: $totalAfter")
-//
-//                    val difference = totalAfter - totalBefore
-//                    Log.d("AdminViewModel", "Difference in total: $difference (expected: $amount)")
-//
-//                    val updatedContributions = _userContributions.value?.toMutableMap() ?: mutableMapOf()
-//                    updatedContributions[user.id] = totalAfter
-//                    _userContributions.postValue(updatedContributions)
-//
-//                    withContext(Dispatchers.Main) {
-//                        onSuccess()
-//                    }
-//                } else {
-//                    Log.d("AdminViewModel", "User not found: $username")
-//                    withContext(Dispatchers.Main) {
-//                        onError("User not found")
-//                    }
-//                }
-//            } catch (e: Exception) {
-//                Log.e("AdminViewModel", "Error saving contribution", e)
-//                withContext(Dispatchers.Main) {
-//                    onError("Failed to save contribution")
-//                }
-//            } finally {
-//                isSaving = false
-//                Log.d("AdminViewModel", "saveContribution completed")
-//            }
-//        }
-//    }
-//
-//    fun getTotalContributionsForAllUsers(onResult: (Map<String, Double>) -> Unit) {
-//
-//        viewModelScope.launch(Dispatchers.IO) {
-//            try {
-//                val contributions = repository.getTotalContributionsPerUser()
-//
-//                // Ensure we're creating a Map<String, Double>
-//                val totalContributions = contributions
-//                    .associate { contribution ->
-//                        contribution.userId to contribution.total
-//                    }
-//
-//                _userContributions.postValue(totalContributions)
-//
-//                withContext(Dispatchers.Main) {
-//                    onResult(totalContributions)
-//                }
-//            } catch (e: Exception) {
-//                Log.e("AdminViewModel", "Error fetching total contributions for all users", e)
-//                withContext(Dispatchers.Main) {
-//                    onResult(emptyMap())
-//                }
-//            }
-//        }
-//    }
-//
-//
-//    // Other methods remain the same...
-//
-//    fun getMonthlyContributionSummary(onResult: (List<MonthlyContributionSummary>) -> Unit) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            try {
-//                val monthlyContributions = repository.getTotalContributionsByMonth()
-//
-//                val monthlyTargets = mapOf(
-//                    "01" to 2976.0, "02" to 8190.0, "03" to 13680.0, "04" to 19170.0,
-//                    "05" to 24570.0, "06" to 29790.0, "07" to 35100.0, "08" to 40410.0,
-//                    "09" to 45720.0, "10" to 51030.0, "11" to 56340.0, "12" to 61650.0
-//                )
-//
-//                val summaryList = monthlyContributions.map { contribution ->
-//                    val target = monthlyTargets[contribution.month] ?: 0.0
-//                    val deficit = target - contribution.total
-//                    val remark = if (deficit <= 0) "Met" else "Unmet"
-//                    val percentage = if (target > 0) (contribution.total / target) * 100 else 0.0
-//
-//                    MonthlyContributionSummary(
-//                        month = getMonthName(contribution.month),
-//                        totalAmount = contribution.total,
-//                        deficit = if (deficit > 0) deficit else 0.0,
-//                        remark = remark,
-//                        percentage = percentage
-//                    )
-//                }
-//
-//                withContext(Dispatchers.Main) {
-//                    onResult(summaryList)
-//                }
-//            } catch (e: Exception) {
-//                Log.e("AdminViewModel", "Error fetching monthly contributions", e)
-//                withContext(Dispatchers.Main) {
-//                    onResult(emptyList())
-//                }
-//            }
-//        }
-//    }
-
-
-
+fun updateUsers(users: List<User>, onComplete: () -> Unit) {
+    viewModelScope.launch(Dispatchers.IO) {
+        try {
+            users.forEach { user ->
+                repository.updateUser(user) // ✅ Use repository instead of database
+            }
+            withContext(Dispatchers.Main) {
+                onComplete() // Notify UI after completion
+            }
+        } catch (e: Exception) {
+            Log.e("AdminViewModel", "Failed to update users", e)
+        }
+    }
 }
+}
+
+
+
+
+
+
