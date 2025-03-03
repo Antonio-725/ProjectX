@@ -5,7 +5,7 @@
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/feedback_cycle_loop"
-        
+
         android:title="Refresh"
         app:showAsAction="ifRoom" />
 
@@ -13,7 +13,9 @@
         android:id="@+id/action_notifications"
         android:icon="@drawable/ic_notification"
         android:title="Notifications"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        app:actionLayout="@layout/notification_icon_with_badge"
+        />
 
 
 </menu>

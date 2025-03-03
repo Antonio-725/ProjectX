@@ -25,6 +25,7 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.snackbar.Snackbar
+import com.onfonmobile.projectx.Firestore.Helpers.Worker.NotificationScheduler
 import com.onfonmobile.projectx.Firestore.Helpers.Worker.SyncScheduler
 import com.onfonmobile.projectx.R
 import com.onfonmobile.projectx.data.AppDatabase
@@ -35,6 +36,9 @@ import com.onfonmobile.projectx.ui.user.Admin
 import com.onfonmobile.projectx.ui.user.AdminViewModel
 import com.onfonmobile.projectx.ui.user.AdminViewModelFactory
 import com.onfonmobile.projectx.ui.di.SessionManager
+import com.onfonmobile.projectx.ui.di.SharedViewModel
+import com.onfonmobile.projectx.ui.login.HelpandSupport
+import com.onfonmobile.projectx.ui.login.Notifications
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -52,8 +56,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adminViewModel: AdminViewModel
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: MonthlyContributionAdapter
+    private lateinit var sharedViewModel: SharedViewModel
 
-    private val targetAmount = 400770 // Hardcoded target amount
+    private val targetAmount = 400770
+    private var notificationCount = 0
+    // Hardcoded target amount
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -116,6 +123,13 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+
+        // Observe notification count
+        sharedViewModel.notificationCount.observe(this) { count ->
+            updateNotificationCounter(count)
+        }
     }
 
     override fun onResume() {
@@ -135,6 +149,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_profile -> openActivity(ProfileActivity::class.java)
                 R.id.nav_admin_page -> openActivity(Admin::class.java)
                 R.id.nav_settings -> logout()
+                R.id.nav_help->openActivity(HelpandSupport::class.java)
                 else -> false
             }
         }
@@ -170,8 +185,17 @@ class MainActivity : AppCompatActivity() {
         progressBarContainer.visibility = View.GONE
     }
 
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        menuInflater.inflate(R.menu.top_app_bar_menu, menu)
+//        return true
+//    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_app_bar_menu, menu)
+        val notificationItem = menu.findItem(R.id.action_notifications)
+        notificationItem.actionView?.setOnClickListener {
+            onOptionsItemSelected(notificationItem)
+        }
+        updateNotificationCounter(notificationCount)
         return true
     }
 
@@ -181,11 +205,18 @@ class MainActivity : AppCompatActivity() {
                 refreshData() // Refresh all data when clicked
                 true
             }
+            R.id.action_notifications -> {
+               // val intent = Intent(this, Notifications::class.java)
+                updateNotificationCounter(0)
+                NotificationScheduler.scheduleNotification(this)
+              //  startActivity(intent)
+                true
 
-            R.id.action_notifications -> true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
 
     private fun updateNavigationHeader() {
@@ -232,6 +263,21 @@ class MainActivity : AppCompatActivity() {
                 recyclerView.adapter = adapter
             }
         }
+    }
+    private fun updateNotificationCounter(count: Int) {
+        notificationCount = count
+        val menuItem = toolbar.menu.findItem(R.id.action_notifications)
+        val badge = menuItem.actionView?.findViewById<TextView>(R.id.notification_badge)
+        if (count > 0) {
+            badge?.text = count.toString()
+            badge?.visibility = View.VISIBLE
+        } else {
+            badge?.visibility = View.GONE
+        }
+    }
+    fun onNewNotificationReceived() {
+        notificationCount++
+        updateNotificationCounter(notificationCount)
     }
 
 

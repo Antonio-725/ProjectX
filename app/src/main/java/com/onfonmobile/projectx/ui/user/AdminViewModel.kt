@@ -157,7 +157,7 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
             val summaryList = monthlyContributions.map { contribution ->
                 val target = monthlyTargets[contribution.month] ?: 0.0
                 val deficit = target - contribution.total
-                val remark = if (deficit <= 0) "Met" else "Unmet"
+                val remark = if (deficit <= 0) "Achieved" else "Unachieved"
 
                 // Calculate percentage contribution towards target
                 val percentage = if (target > 0) (contribution.total / target) * 100 else 0.0

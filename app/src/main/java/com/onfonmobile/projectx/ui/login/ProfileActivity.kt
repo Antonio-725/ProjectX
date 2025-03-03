@@ -29,7 +29,6 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var viewModel: ProfileViewModel
     private lateinit var roleText: TextView
 
-
     private val YEARLY_TARGET = 66795  // Fixed yearly contribution target
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +52,6 @@ class ProfileActivity : AppCompatActivity() {
             finish()
         }
 
-
         // Initialize SessionManager
         sessionManager = SessionManager(this)
 
@@ -70,9 +68,7 @@ class ProfileActivity : AppCompatActivity() {
         // Set initial values
         usernameTextView.text = "Username: ${sessionManager.getUsername() ?: "Unknown User"}"
         roleText.text = "Role: ${sessionManager.getUserRole() ?: "Unknown Role"}"
-       // totalContributionTextView.text = "Total Contributions: Loading..."
-      //  remainingAmountTextView.text = "Remaining Amount: Loading..."
-        progressPercentageTextView.text = "0%"
+        progressPercentageTextView.text = "0.00%"
 
         // Initialize ViewModel
         viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
@@ -88,20 +84,20 @@ class ProfileActivity : AppCompatActivity() {
 
                 // Calculate remaining amount
                 val remainingAmount = YEARLY_TARGET - total
-                val progressPercentage = ((total / YEARLY_TARGET.toFloat()) * 100).toInt()
+                val progressPercentage = (total / YEARLY_TARGET.toFloat()) * 100
 
-                // Update UI
+                // Update UI with formatted decimal values
                 totalContributionTextView.text = "Ksh ${"%.2f".format(total)}"
                 remainingAmountTextView.text = "Ksh ${"%.2f".format(remainingAmount)}"
-                progressBar.progress = progressPercentage
-                progressPercentageTextView.text = "$progressPercentage%"
+                progressBar.progress = progressPercentage.toInt()
+                progressPercentageTextView.text = "%.2f%%".format(progressPercentage)
             }
         } else {
             Log.d("ProfileActivity", "UserId is null, displaying zero contribution")
             totalContributionTextView.text = "Total Contributions: Ksh 0.00"
             remainingAmountTextView.text = "Remaining Amount: Ksh 66,795.00"
             progressBar.progress = 0
-            progressPercentageTextView.text = "0%"
+            progressPercentageTextView.text = "0.00%"
         }
     }
 }

@@ -18,12 +18,13 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "1.8.3.3"
+        versionName = "1.9.3.12"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
+
         release {
 
             isMinifyEnabled = false
@@ -63,14 +64,17 @@ dependencies {
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.firestore.ktx)
     implementation(libs.androidx.work.runtime.ktx)
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.androidx.databinding.runtime)
     implementation(libs.androidx.databinding.adapters)
     implementation (libs.jbcrypt)
+    implementation ("com.android.volley:volley:1.2.1")
 
     implementation ("com.github.bumptech.glide:glide:4.12.0")
+    implementation ("com.google.guava:guava:31.1-android")
 
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")

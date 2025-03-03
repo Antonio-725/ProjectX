@@ -1,10 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:padding="24dp"
     tools:context=".ui.activities.LoginActivity">
 
@@ -46,13 +46,15 @@
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
+
+        app:startIconTint="@color/accent_color"
         android:paddingVertical="4dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/usernameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/gray_text"
             android:textColorHint="@color/gray_text"
             android:inputType="text" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -70,6 +72,10 @@
         app:boxCornerRadiusBottomStart="8dp"
         app:boxCornerRadiusTopEnd="8dp"
         app:boxCornerRadiusTopStart="8dp"
+
+        app:startIconTint="@color/accent_color"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/accent_color"
         android:paddingVertical="4dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -77,10 +83,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
-            android:textColor="@color/black"
+            android:textColor="@color/gray_text"
             android:textColorHint="@color/gray_text" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/forgotPasswordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:textColor="@color/accent_color"
+        android:textSize="14sp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/loginButton"
@@ -92,7 +112,7 @@
         android:layout_marginTop="24dp"
         app:cornerRadius="12dp"
         android:textSize="18sp"
-        app:layout_constraintTop_toBottomOf="@id/passwordInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/forgotPasswordText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

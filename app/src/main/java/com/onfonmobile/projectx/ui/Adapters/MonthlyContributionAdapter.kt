@@ -59,7 +59,7 @@ class MonthlyContributionAdapter(
 
     // Set remark chip style
     when (item.remark) {
-        "Met" -> {
+        "Achieved" -> {
             holder.remarkChip.apply {
                 setChipBackgroundColorResource(R.color.success_color)
                 setTextColor(Color.WHITE)
@@ -67,7 +67,7 @@ class MonthlyContributionAdapter(
                 chipIconTint = context.getColorStateList(android.R.color.white)
             }
         }
-        "Unmet" -> {
+        "Unachieved" -> {
             holder.remarkChip.apply {
                 setChipBackgroundColorResource(R.color.error_color)
                 setTextColor(Color.WHITE)

@@ -1,5 +1,6 @@
 package com.onfonmobile.projectx.ui.user
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -16,10 +17,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.AuthFailureError
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.NetworkError
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.messaging.FirebaseMessaging
 import com.onfonmobile.projectx.R
 import com.onfonmobile.projectx.data.AppDatabase
 import com.onfonmobile.projectx.data.entities.User
@@ -35,12 +40,22 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
+import com.onfonmobile.projectx.Firestore.Helpers.Worker.NotificationScheduler
+import com.onfonmobile.projectx.ui.di.SharedViewModel
+import com.onfonmobile.projectx.ui.login.Notifications
+
+import org.json.JSONObject
+
 class Admin : AppCompatActivity() {
     private lateinit var binding: ActivityAdmin2Binding
     private lateinit var adapter: GroupMembersAdapter
     private lateinit var adapter1: UsersAdapter
     private lateinit var viewModel: AdminViewModel
     private lateinit  var contributionRepository: ContributionRepository
+    private lateinit var sharedViewModel: SharedViewModel
 
 override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -51,7 +66,21 @@ override fun onCreate(savedInstanceState: Bundle?) {
     setupRecyclerView()
     setupDashboardActions()
     loadUsers()
-    resetUIBasedOnRole() // Use this instead of checkUserRole()
+    resetUIBasedOnRole()
+    // Start the periodic notification scheduling
+    //NotificationScheduler.scheduleNotification(this);
+
+    FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+        if (task.isSuccessful) {
+            val token = task.result
+            Log.d("FCM Token", token) // Save this token to your database
+        } else {
+            Log.w("FCM Token", "Fetching FCM registration token failed", task.exception)
+        }
+    }
+    sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+
+
 }
 
     private fun setupViewModel() {
@@ -311,8 +340,27 @@ private fun checkUserRole() {
     }
 
     private fun showRemindersDialog() {
-        // TODO: Implement reminders functionality
-        showUnderDevelopmentMessage("Reminders")
+        val title = "Contribution Reminder"
+        val message = "Please make your contribution as soon as possible."
+
+        sendPushNotification(title, message)
+    }
+    private fun sendPushNotification(title: String, message: String) {
+        // Increment the notification count
+        sharedViewModel.incrementNotificationCount()
+
+        // Create an intent to launch the Notifications activity
+        val intent = Intent(this, Notifications::class.java).apply {
+            putExtra("NOTIFICATION_TITLE", title)
+            putExtra("NOTIFICATION_MESSAGE", message)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        // Show a toast message to confirm sending
+        Toast.makeText(this, "Sending notification: $title", Toast.LENGTH_SHORT).show()
+
+        // Start the Notifications activity
+       // startActivity(intent)
     }
 
     private fun showUserDetailsDialog(user: User) {
