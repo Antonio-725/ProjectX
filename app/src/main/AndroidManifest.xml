@@ -26,8 +26,6 @@
             android:name=".ui.login.HelpandSupport"
             android:exported="false" />
 
-        <receiver android:name=".Firestore.Helpers.Worker.NotificationScheduler" />
-
         <activity
             android:name=".ui.login.Notifications"
             android:exported="false" />

@@ -12,7 +12,7 @@ import com.onfonmobile.projectx.ui.login.Notifications;
 
 import java.util.concurrent.TimeUnit;
 
-public class NotificationScheduler {
+public class NotificationScheduler  {
 
     public static void scheduleNotification(Context context) {
         // Create a periodic work request that runs every 24 hours

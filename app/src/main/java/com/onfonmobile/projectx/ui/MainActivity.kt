@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: MonthlyContributionAdapter
     private lateinit var sharedViewModel: SharedViewModel
 
-    private val targetAmount = 400770
+    private val targetAmount = 104400
     private var notificationCount = 0
     // Hardcoded target amount
 

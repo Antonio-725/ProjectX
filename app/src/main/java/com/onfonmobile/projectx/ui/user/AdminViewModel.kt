@@ -148,9 +148,9 @@ class AdminViewModel(private val repository: ContributionRepository) : ViewModel
 
             // Define target amounts for each month
             val monthlyTargets = mapOf(
-                "01" to  2976.0, "02" to 8190.0, "03" to 13680.0, "04" to 19170.0,
-                "05" to 24570.0, "06" to 29790.0, "07" to 35100.0, "08" to  40410.0,
-                "09" to 45720.0, "10" to 51030.0, "11" to 56340.0, "12" to  61650.0
+                "01" to  8700.0, "02" to 8700.0, "03" to 8700.0, "04" to 8700.0,
+                "05" to 8700.0, "06" to 8700.0, "07" to 8700.0, "08" to  8700.0,
+                "09" to 8700.0, "10" to 8700.0, "11" to 8700.0, "12" to  8700.0
             )
 
             // Process contributions

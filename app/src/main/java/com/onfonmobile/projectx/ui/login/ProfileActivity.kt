@@ -29,7 +29,7 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var viewModel: ProfileViewModel
     private lateinit var roleText: TextView
 
-    private val YEARLY_TARGET = 66795  // Fixed yearly contribution target
+    private val YEARLY_TARGET = 17400  // Fixed yearly contribution target
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

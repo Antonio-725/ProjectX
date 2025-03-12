@@ -14,22 +14,7 @@ import androidx.work.WorkManager
 
 
 object SyncScheduler {
-    //    fun scheduleSync(context: android.content.Context) {
-//        val syncRequest = PeriodicWorkRequestBuilder<SyncWorker>(5, TimeUnit.SECONDS)
-//            .setConstraints(
-//                Constraints.Builder()
-//                    .setRequiredNetworkType(NetworkType.CONNECTED)
-//                    .build()
-//            )
-//            .build()
-//
-//        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-//            "SyncWorker",
-//            ExistingPeriodicWorkPolicy.UPDATE,  // <-- Use UPDATE instead of KEEP
-//            syncRequest
-//        )
-//
-//    }
+
     fun scheduleSync(context: Context) {
         val syncRequest = OneTimeWorkRequestBuilder<SyncWorker>()
             .setInitialDelay(3, TimeUnit.SECONDS)  // <-- 3 seconds delay for testing
